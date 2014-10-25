@@ -59,10 +59,8 @@ void QSFcanvas::OnInit(){
 
 
     //*Initialisation des images
-    AM.add("Fly",AnimatedSprite(TM,"graphics/FLYanim",4,7*TAILLE,0,true));
-    AM.add("Circle",AnimatedSprite(TM,"graphics/blackcircle",1,TAILLE,0,true));
-    AM.add("caca",AnimatedSprite(TM,"graphics/CACA",1,5*10,0,false));
-    AM.add("cacador",AnimatedSprite(TM,"graphics/cacador",1,5*12,0,false));
+//    AM.add("Fly",AnimatedSprite(TM,"graphics/FLYanim",4,7*TAILLE,0,true));
+//    AM.add("cacador",AnimatedSprite(TM,"graphics/cacador",1,5*12,0,false));
     //*/
 
 
@@ -77,11 +75,6 @@ void QSFcanvas::receiveDM(DisplayManager & dm){
 
 
 
-void QSFcanvas::pause(){
-    if(myTimer.isActive())
-        myTimer.stop();
-    else myTimer.start();
-}
 
 void QSFcanvas::desableLeft(){
 

@@ -32,7 +32,6 @@ public:
 public slots :
     void receiveDM(DisplayManager&);
     void switchMap(int);
-    void pause();
     void desableLeft();
     void desableRight();
     void updateView(int x,int y);

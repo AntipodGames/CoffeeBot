@@ -2,7 +2,7 @@
 #define ANIMATEDSPRITE_H
 #include <QVector>
 #include <SFML/Graphics.hpp>
-#include <texturemanager.h>
+#include "texturemanager.h"
 #include <QFile>
 //#include <QFileOpenEvent>
 #include <stack>

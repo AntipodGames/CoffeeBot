@@ -9,7 +9,6 @@
 #include "displaymanager.h"
 #include "datamanager.h"
 #include "texturemanager.h"
-#define TIMER 16
 
 
 typedef struct envTime{
@@ -38,7 +37,6 @@ public:
 
 public slots:
     void run();
-    void pause();
     void makeStop(bool);
     void reloadLevel();
 

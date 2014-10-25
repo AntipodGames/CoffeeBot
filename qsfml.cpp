@@ -1,7 +1,7 @@
 #include "qsfml.h"
 
-Qsfml::Qsfml(QWidget* parent,const QPoint& Position, const QSize& Size
-             , unsigned int FrameTime) :
+Qsfml::Qsfml(QWidget* parent, const QPoint& Position, const QSize& Size
+             ) :
     QWidget(parent),
     myInitialized (false)
 {
@@ -17,10 +17,6 @@ Qsfml::Qsfml(QWidget* parent,const QPoint& Position, const QSize& Size
     move(Position);
     setMaximumSize(Size);
     setMinimumSize(Size);
-
-    // Préparation du timer
-    myTimer.setInterval(FrameTime);
-
 }
 
 Qsfml::~Qsfml(){}
@@ -39,10 +35,6 @@ void Qsfml::showEvent(QShowEvent*){
 
         // On laisse la classe dérivée s'initialiser si besoin
         OnInit();
-
-        // On paramètre le timer de sorte qu'il génère un rafraîchissement à la fréquence souhaitée
-        connect(&myTimer, SIGNAL(timeout()), this, SLOT(repaint()));
-        myTimer.start();
 
         myInitialized = true;
     }

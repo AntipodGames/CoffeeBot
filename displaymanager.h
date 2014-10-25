@@ -1,7 +1,7 @@
 #ifndef DISPLAYMANAGER_H
 #define DISPLAYMANAGER_H
 #include <QVector>
-#include <qsfml.h>
+#include "qsfml.h"
 #include "animatedmanager.h"
 #include "entite.h"
 #include <QMap>

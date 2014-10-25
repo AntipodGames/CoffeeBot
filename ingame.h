@@ -5,10 +5,12 @@
 
 
 #include <QMessageBox>
-#include <qsfcanvas.h>
-#include <environment.h>
-#include <ingameui.h>
+#include <qtimer.h>
+#include "qsfcanvas.h"
+#include "environment.h"
+#include "ingameui.h"
 #include "soundmanager.h"
+#define TIMER 16
 
 class InGame : public QWidget
 {
@@ -22,6 +24,7 @@ public slots :
     void pausePopUp();
     void endLvlPopUp(QString);
     void changeMusic(QString);
+    void pause();
 
 
 private:
@@ -33,6 +36,7 @@ private:
     QMessageBox* endLevel;
     QFrame* MainFrame;
     SoundManager* SM;
+    QTimer timer;
 
     int Width;
     int Height;

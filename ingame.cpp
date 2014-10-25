@@ -32,8 +32,8 @@ InGame::InGame(int width, int height)
 
     Pause->setText("Pause");
 
-
-
+    // Préparation du timer
+    timer.setInterval(TIMER);
 }
 
 void InGame::init(){
@@ -42,6 +42,12 @@ void InGame::init(){
     MainFrame->show();
     SFMLView->show();
 //    SFMLView->initView(env->getFly()->get_x(),env->getFly()->get_y(),Width,Height);
+
+
+    // On paramètre le timer de sorte qu'il génère un rafraîchissement à la fréquence souhaitée
+    connect(&timer, SIGNAL(timeout()), SFMLView, SLOT(repaint()));
+    connect(&timer,SIGNAL(timeout()),env,SLOT(run()));
+    timer.start();
 
 
 
@@ -66,4 +72,10 @@ void InGame::pausePopUp(){
 void InGame::endLvlPopUp(QString str){
     endLevel->setText(str);
     endLevel->exec();
+}
+
+void InGame::pause(){
+    if(timer.isActive())
+        timer.stop();
+    else timer.start();
 }

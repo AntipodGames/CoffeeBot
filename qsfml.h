@@ -6,7 +6,6 @@
 #include <iostream>
 
 #define TAILLE 5
-#define TIMER 16
 
 #ifdef Q_WS_X11
     #include <Qt/qx11info_x11.h>
@@ -18,8 +17,7 @@ class Qsfml : public QWidget, public sf::RenderWindow
     Q_OBJECT
 
 public:
-    Qsfml(QWidget* parent,const QPoint& Position, const QSize& Size
-          , unsigned int FrameTime = TIMER);
+    Qsfml(QWidget* parent,const QPoint& Position, const QSize& Size);
     virtual ~Qsfml();
 
 
@@ -36,7 +34,6 @@ protected:
 
     virtual void paintEvent(QPaintEvent*);
 
-    QTimer myTimer;
     bool   myInitialized;
 };
 
