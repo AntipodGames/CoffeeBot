@@ -5,7 +5,6 @@
 #include "animatedmanager.h"
 #include "entite.h"
 #include <QMap>
-#include "fly.h"
 #include <utility>
 
 class DisplayManager

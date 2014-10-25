@@ -13,57 +13,12 @@ QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent)
 void QSFcanvas::keyPressEvent(QKeyEvent * ke){
 
 
-    if(ke->key() == Qt::Key_Z || ke->key() == Qt::Key_Up){
-        axisYPos = -1;
-    }
-    if(ke->key() == Qt::Key_S || ke->key() == Qt::Key_Down){
-        axisYPos = 1;
-    }
-    if(ke->key() == Qt::Key_Q || ke->key() == Qt::Key_Left){
-        axisXPos = -1;
-    }
-    if(ke->key() == Qt::Key_D || ke->key() == Qt::Key_Right){
-        axisXPos = 1;
-    }
-    if(ke->key() == Qt::Key_Shift){
-        emit activSlide(true);
-    }
-
-
-    if(!padBlocked)
-        emit sendPadPos(axisXPos,axisYPos);
 
 
 }
 
 void QSFcanvas::keyReleaseEvent(QKeyEvent * e){
-    if(e->key() == Qt::Key_Z || e->key() == Qt::Key_Up){
-        axisYPos = 0;
-    }
-    if(e->key() == Qt::Key_S || e->key() == Qt::Key_Down){
-        axisYPos = 0;
-    }
-    if(e->key() == Qt::Key_Q || e->key() == Qt::Key_Left){
-        axisXPos = 0;
-    }
-    if(e->key() == Qt::Key_D || e->key() == Qt::Key_Right){
-        axisXPos = 0;
-    }
-    if(e->key() == Qt::Key_Space){
-        pause();
-        emit setPause();
-    }
-    if(e->key() == Qt::Key_Shift){
-        emit activSlide(false);
-        padBlocked = false;
 
-    }
-    if(e->key() == Qt::Key_Enter){
-        emit retry();
-    }
-
-    if(!padBlocked)
-        emit sendPadPos(axisXPos,axisYPos);
 }
 
 void QSFcanvas::gamePadEvent(){
@@ -83,37 +38,7 @@ void QSFcanvas::gamePadEvent(){
     sf::Event Event;
     if (this->pollEvent(Event))
     {
-        if((Event.type == sf::Event::JoystickMoved) && ((Event.joystickMove.axis == sf::Joystick::X))){
-            axisXPos = Event.joystickMove.position/100;
-           // std::cout << axisXPos << std::endl;
-        }
-        if((Event.type == sf::Event::JoystickMoved) && ((Event.joystickMove.axis == sf::Joystick::Y))){
-            axisYPos = Event.joystickMove.position/100;
 
-            //std::cout << axisYPos << std::endl;
-        }
-        if((Event.type == sf::Event::JoystickButtonPressed)){
-            if(Event.joystickButton.button == 5){ //R1
-                emit activSlide(true);
-            }
-
-//            if(Event.JoyButton.Button == 4) //L1
-//                emit activBoost(true);
-
-
-        }
-        if((Event.type == sf::Event::JoystickButtonReleased)){
-            if(Event.joystickButton.button == 5){ //R1
-                emit activSlide(false);
-                padBlocked = false;
-            }
-            if(Event.joystickButton.button == 4) //L1
-                emit retry();
-
-
-        }
-        if(!padBlocked)
-            emit sendPadPos(axisXPos,axisYPos);
     }
 
 
@@ -189,10 +114,7 @@ void QSFcanvas::OnUpdate()
 
     gamePadEvent();
 
-    if(leftPressed)
-        emit turnLeft();
-    if(rightPressed)
-        emit turnRight();
+
 
 
     clear();

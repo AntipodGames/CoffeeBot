@@ -49,18 +49,6 @@ void DisplayManager::display(AnimatedManager &AM, sf::RenderWindow &App){
         it.value()->get_trigger().draw(App);
         //AM.get(EM.value(tmp[i].second)->get_nom()).setFrame(EM.value(tmp[i].second)->getFrame());
 
-        //affichage de la trainee derriere la mouche
-        if(it.key() == 1){//!(((Fly*) EM.value(tmp[i].second))->getPos().isEmpty()) ){
-            QPoint tmpPoint;
-            // AM.get(EM.value(tmp[i].second)->get_nom()).setAngle(-EM.value(tmp[i].second)->getAngle());
-            for(int k = 0; k < ((Fly*) it.value())->getPos().size()-5; k++){
-                tmpPoint = ((Fly*) it.value())->getPos()[k];
-                AM.get("Circle").resize(k/4+TAILLE,k/4+TAILLE);
-                AM.get("Circle").setPosition(tmpPoint.x(),tmpPoint.y());
-                AM.get("Circle").affichage(App);
-
-            }
-        }
 
         //Displays of all entity
 

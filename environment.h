@@ -6,7 +6,6 @@
 #include <fstream>
 #include <sstream>
 #include <QPoint>
-#include "fly.h"
 #include "displaymanager.h"
 #include "datamanager.h"
 #include "texturemanager.h"
@@ -35,8 +34,6 @@ public:
     void init();
 
     void bonusPurge();
-
-    Fly* getFly();
 
 
 public slots:

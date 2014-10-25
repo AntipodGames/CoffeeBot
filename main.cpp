@@ -1,8 +1,12 @@
 #include <iostream>
+#include <QApplication>
+#include "ingame.h"
+#define WIDTH 800
+#define HEIGHT 600
 
 using namespace std;
 
-int main()
+int main(int argc, char** argv)
 {
     QApplication* App = new QApplication(argc,argv);
 
