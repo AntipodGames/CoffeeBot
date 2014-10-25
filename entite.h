@@ -62,7 +62,6 @@ public:
     //*Methodes
     virtual void perdVie(int degats);
 
-    virtual void chFrame();
 
 
     virtual float calcAngle(float x1, float y1, float x2, float y2);
@@ -90,7 +89,6 @@ protected:
     state currentState;
     int currentFrame;
     QTimer internalClock;
-    QTime frameClock;
     //*/
 
     //*Fonctions internes

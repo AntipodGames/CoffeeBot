@@ -19,7 +19,6 @@ Entite::Entite(const Entite & e){
     ID = e.ID;
     currentFrame = e.currentFrame;
     internalClock.start(e.internalClock.interval());
-    frameClock.start();
     speedVector.first = 0;
     speedVector.second = 0;
 }
@@ -50,7 +49,6 @@ Entite::Entite(std::string name, double v, int px, int py,int w, int h, int vi)
 
     tz.set_centre(x,y);
     tz.set_rayon(h);
-    frameClock.start();
 
     speedVector.first = 0;
     speedVector.second = 0;
@@ -134,10 +132,6 @@ bool Entite::addY(double n){
     return false;
 }
 
-void Entite::chFrame(){
-    if(frameClock.elapsed()%1 == 0)
-        currentFrame++;
-}
 
 int Entite::get_vitesse(){
     return vitesse;
