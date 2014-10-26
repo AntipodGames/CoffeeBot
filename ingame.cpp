@@ -7,9 +7,9 @@ InGame::InGame()
 InGame::InGame(int width, int height)
 {
     MainFrame = new QFrame();
-    MainFrame->resize(width, height-50);
+    MainFrame->resize(width, height);
     env = new Environment();
-    SFMLView = new QSFcanvas(QPoint(0,0),QSize(width,height-50),MainFrame);
+    SFMLView = new QSFcanvas(QPoint(0,0),QSize(width,height),MainFrame);
 //    gui = new InGameUI(QPoint(0,height-50),QSize(width,50));
 
     Width = width;
