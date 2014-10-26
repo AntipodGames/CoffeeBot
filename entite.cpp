@@ -20,7 +20,8 @@ Entite::Entite(const Entite & e){
     currentFrame = e.currentFrame;
     internalClock.start(e.internalClock.interval());
     frameClock.start();
-
+    speedVector.first = 0;
+    speedVector.second = 0;
 }
 
 
@@ -51,6 +52,8 @@ Entite::Entite(std::string name, double v, int px, int py,int w, int h, int vi)
     tz.set_rayon(h);
     frameClock.start();
 
+    speedVector.first = 0;
+    speedVector.second = 0;
 }
 
 
@@ -79,6 +82,19 @@ void Entite::set_y(double py){
     tz.set_centre(x,y);
 }
 
+int Entite::move(){
+    addX(speedVector.first);
+    addY(speedVector.second);
+}
+
+void Entite::setSpeedVector(QPair<double,double> v){
+    speedVector = v;
+}
+
+void Entite::setSpeedVector(double vx, double vy){
+    speedVector.first = vx;
+    speedVector.second = vy;
+}
 
 bool Entite::addX(int n){
     tz.move(n,0);

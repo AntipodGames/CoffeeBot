@@ -2,6 +2,7 @@
 #define ENTITE_H
 #include <QTimer>
 #include <QTime>
+#include <QPair>
 #include "animatedsprite.h"
 #include "imagemanager.h"
 #include "tzellipse.h"
@@ -13,12 +14,6 @@ class Entite
 {
 
 public:
-
-   /* typedef struct typetourelle{
-        forme form;
-        int**  physx;
-    }typetourelle;
-    static QVector<int**> ttours;*/
 
     typedef enum state {
         RIGHT,
@@ -41,7 +36,6 @@ public:
     virtual int get_vitesse();
     virtual std::string get_nom();
 
-   // virtual AnimatedSprite& get_image();
     virtual TzEllipse& get_trigger();
 
     virtual int getID();
@@ -76,6 +70,10 @@ public:
  //   virtual std::string toString()=0;
     //*/
 
+    virtual int move();
+    void setSpeedVector(QPair<double,double> v);
+    void setSpeedVector(double vx, double vy);
+
 protected:
     //*Attributs
     float x;
@@ -83,6 +81,7 @@ protected:
     int width;
     int height;
     float vitesse; // unit : pixel/ms
+    QPair<double,double> speedVector;
     std::string nom;
  //   AnimatedSprite image;
     TzEllipse tz;
