@@ -69,22 +69,23 @@ void Environment::run(){
         TzEllipse tmpTrigger = it.value()->get_trigger();
 
         //CHECK NUMERO 1 : LE CHECK POST DEPLACEMENT
-//        if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
-//            double thetaMin = tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI;
-//            double thetaMax = tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI;
-//            double theta = (thetaMax - thetaMin) / 2.;
-//            if(theta >= 0.2){
-//                double newTheta = theta - PI;
-//                if(newTheta < -PI)
-//                    newTheta += 2. * PI;
-//                double dX = 2. * TAILLE * (1. - cos(theta)) * cos(newTheta);
-//                double dY = - 2. * TAILLE * (1. - cos(theta)) * sin(newTheta);
-//                std::cout << dX << "; " << dY << std::endl;
-//                it.value()->get_trigger().move(dX, dY);
-//                it.value()->set_x(it.value()->get_x() + dX);
-//                it.value()->set_y(it.value()->get_y() + dY);
-//            }
-//        }
+        if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
+            double thetaMin = tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI;
+            double thetaMax = tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI;
+            double tmpTheta = (thetaMax - thetaMin) / 2.;
+            if(tmpTheta >= 0.2){
+                double finalTheta = thetaMax - tmpTheta - PI;
+                if(finalTheta < -PI)
+                    finalTheta += 2.* PI;
+
+                double dX = 4. * TAILLE * (1. - cos(tmpTheta)) * cos(finalTheta);
+                double dY = 4. * TAILLE * (1. - cos(tmpTheta)) * sin(finalTheta);
+                std::cout << dX << "; " << dY << std::endl;
+                it.value()->get_trigger().move(dX, dY);
+                it.value()->set_x(it.value()->get_x() + dX);
+                it.value()->set_y(it.value()->get_y() + dY);
+            }
+        }
 
         //TMP TRIGGER <- TRIGGER PREVISIONNEL
         tmpTrigger = it.value()->get_trigger();
@@ -126,6 +127,9 @@ void Environment::run(){
 
         applyGravity(it,tmpTrigger);
 
+
+
+
     }
 
 
@@ -154,6 +158,7 @@ void Environment::applyGravity(QMap<int,Entite*>::iterator it,TzEllipse tmpTrigg
         else
             if(!it.value()->getOnTheFloor()){
                 double newSpeedY = it.value()->getSpeedVector().second + 2*TAILLE * G / 500;
+
                 if(newSpeedY > maxFallingSpeed)
                     newSpeedY = maxFallingSpeed;
                 it.value()->setSpeedY(newSpeedY);
@@ -161,6 +166,7 @@ void Environment::applyGravity(QMap<int,Entite*>::iterator it,TzEllipse tmpTrigg
     }
     else{
         double newSpeedY = it.value()->getSpeedVector().second + 2*TAILLE * G / 500;
+
         if(newSpeedY > maxFallingSpeed)
             newSpeedY = maxFallingSpeed;
         it.value()->setSpeedY(newSpeedY);
