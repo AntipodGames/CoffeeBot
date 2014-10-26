@@ -3,7 +3,8 @@
 
 QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent) : Qsfml(parent, Position, Size)
 {
-    carte = Carte(TM,"graphics/hitmap1.png","graphics/hitmap1.png","graphics/hitmap1.png");
+//    carte = Carte(TM,"graphics/hitmap1.png","graphics/hitmap1.png","graphics/hitmap1.png");
+
 
 }
 

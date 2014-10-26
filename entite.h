@@ -32,6 +32,7 @@ public:
     //*Getters
     virtual int get_x();
     virtual int get_y();
+    virtual int getHeight();
 
     virtual int get_vitesse();
     virtual std::string get_nom();
@@ -70,8 +71,11 @@ public:
     //*/
 
     virtual int move();
+    QPair<double,double> getSpeedVector();
     void setSpeedVector(QPair<double,double> v);
     void setSpeedVector(double vx, double vy);
+    void setSpeedX(double vx);
+    void setSpeedY(double vy);
 
 protected:
     //*Attributs

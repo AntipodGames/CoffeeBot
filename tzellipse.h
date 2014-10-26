@@ -40,7 +40,7 @@ public:
 
     bool isInSprite(sf::Image *,sf::Color);
 
-    float intersectAngle(sf::Image *sprt );
+    float intersectAngle(sf::Image *sprt , sf::Color color);
 
     TzEllipse boost(int h);
 
