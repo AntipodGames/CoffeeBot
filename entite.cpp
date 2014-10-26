@@ -250,13 +250,3 @@ void Entite::setCollUp(bool b){
 bool Entite::getOnTheFloor(){
     return onTheFloor;
 }
-
-void Entite::moveRight(){
-    if(!collRight)
-        addX(vitesse);
-}
-
-void Entite::moveLeft(){
-    if(!collLeft)
-        addX(-vitesse);
-}

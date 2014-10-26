@@ -6,6 +6,13 @@ Environment::Environment(){
     height = hitBox.getScale().y;
     playerStat.insert("mort",0);
     playerStat.insert("score",0);
+
+    dashTimer = new QTimer();
+    dashCoolDownTimer = new QTimer();
+    dashTimer->setInterval(dashDuration);
+    dashCoolDownTimer->setInterval(dashRefresh);
+    connect(dashTimer, SIGNAL(timeout()), this, SLOT(resetDashSpeed()));
+    connect(dashCoolDownTimer, SIGNAL(timeout()), this, SLOT(resetDashCD()));
 }
 
 void Environment::init(){
@@ -80,15 +87,21 @@ void Environment::applyGravity(QMap<int,Entite*>::iterator it,TzEllipse tmpTrigg
         if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI / 2. + PI / 4.
                 && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI / 2. - PI / 4.){
             it.value()->setSpeedY(0);
-            it.value()->setSpeedY(it.value()->getSpeedVector().second - (double)it.value()->getHeight() * G / 200);
             it.value()->setOnTheFloor(true);
         }
         else
-            if(!it.value()->getOnTheFloor())
-                it.value()->setSpeedY(it.value()->getSpeedVector().second + (double)it.value()->getHeight() * G / 500);
+            if(!it.value()->getOnTheFloor()){
+                double newSpeedY = it.value()->getSpeedVector().second + (double)it.value()->getHeight() * G / 400;
+                if(newSpeedY > maxFallingSpeed)
+                    newSpeedY = maxFallingSpeed;
+                it.value()->setSpeedY(newSpeedY);
+            }
     }
     else{
-        it.value()->setSpeedY(it.value()->getSpeedVector().second + (double)it.value()->getHeight() * G / 500);
+        double newSpeedY = it.value()->getSpeedVector().second + (double)it.value()->getHeight() * G / 400;
+        if(newSpeedY > maxFallingSpeed)
+            newSpeedY = maxFallingSpeed;
+        it.value()->setSpeedY(newSpeedY);
     }
 }
 
@@ -122,7 +135,6 @@ QString timeToString(envTime t){
 }
 
 void Environment::turnRight(bool b){
-//     getHero()->moveRight();
     if(b)
         getHero()->setSpeedX(getHero()->getSpeedVector().first + getHero()->get_vitesse());
     else {
@@ -133,7 +145,6 @@ void Environment::turnRight(bool b){
 }
 
 void Environment::turnLeft(bool b){
-//    getHero()->moveLeft();
     if(b)
         getHero()->setSpeedX(getHero()->getSpeedVector().first - getHero()->get_vitesse());
     else  {
@@ -146,4 +157,30 @@ void Environment::turnLeft(bool b){
 void Environment::jump(){
     if(getHero()->getOnTheFloor())
         getHero()->setSpeedY(- getHero()->get_vitesse() * 1.5);
+}
+
+void Environment::dash(bool right){
+    if(canDash){
+        dashTimer->start();
+        dashCoolDownTimer->start();
+        isDashing = true;
+        canDash = false;
+        if(right){
+            getHero()->setSpeedX(dashSpeed);
+        }
+        else{
+            getHero()->setSpeedX(-dashSpeed);
+        }
+    }
+}
+
+void Environment::resetDashSpeed(){
+    getHero()->setSpeedX(0);
+    isDashing = false;
+    dashTimer->stop();
+}
+
+void Environment::resetDashCD(){
+    canDash = true;
+    dashCoolDownTimer->stop();
 }

@@ -14,41 +14,44 @@ QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent)
 
 void QSFcanvas::keyPressEvent(QKeyEvent * ke){
 
-    if(ke->key() == Qt::Key_Z){
-        upPressed = true;
+    if(ke->key() == Qt::Key_Space){
+        emit jump();
     }
     if(ke->key() == Qt::Key_Q){
-//        leftPressed = true;
+        leftPressed = true;
         emit turnLeft(true);
     }
     if(ke->key() == Qt::Key_D){
-//        rightPressed = true;
+        rightPressed = true;
         emit turnRight(true);
     }
-    if(ke->key() == Qt::Key_S){
-        downPressed = true;
+    if(ke->key() == Qt::Key_Control){
+        if(rightPressed && !leftPressed)
+            emit dash(true);
+        if(leftPressed && !rightPressed)
+            emit dash(false);
     }
 
 }
 
 void QSFcanvas::keyReleaseEvent(QKeyEvent * e){
 
-    if(e->key() == Qt::Key_Z){
-        upPressed = false;
+    if(e->key() == Qt::Key_Space){
+        spacePressed = false;
 
     }
     if(e->key() == Qt::Key_Q){
-//        leftPressed = false;
+        leftPressed = false;
         emit turnLeft(false);
 
     }
     if(e->key() == Qt::Key_D){
-//        rightPressed = false;
+        rightPressed = false;
         emit turnRight(false);
 
     }
-    if(e->key() == Qt::Key_S){
-        downPressed = false;
+    if(e->key() == Qt::Key_Control){
+        ctrlPressed = false;
 
     }
 }
@@ -161,8 +164,8 @@ void QSFcanvas::OnUpdate()
 //        emit turnRight();
 //    if(leftPressed)
 //        emit turnLeft();
-    if(upPressed)
-        emit jump();
+//    if(spacePressed)
+//        emit jump();
 
 
     clear();

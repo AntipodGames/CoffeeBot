@@ -39,6 +39,7 @@ signals:
     void turnLeft(bool);
     void turnRight(bool);
     void jump();
+    void dash(bool right);
     void activBoost(bool);
     void activSlide(bool);
     void sendPadPos(float,float);
@@ -60,10 +61,10 @@ private:
 
     bool leftPressed = false;
     bool rightPressed = false;
-    bool upPressed = false;
-    bool downPressed = false;
-    float  axisXPos = 0;
-    float  axisYPos = 0;
+    bool spacePressed = false;
+    bool ctrlPressed = false;
+    float axisXPos = 0;
+    float axisYPos = 0;
     bool padBlocked = false;
 
     void OnInit();

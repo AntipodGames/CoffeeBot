@@ -49,6 +49,9 @@ public slots:
     void turnRight(bool);
     void turnLeft(bool);
     void jump();
+    void dash(bool right);
+    void resetDashSpeed();
+    void resetDashCD();
     //-
 
 
@@ -71,8 +74,6 @@ signals:
 
 private:
 
-
-
     typedef std::pair<int,int> bpoint;
 
     //Attributs
@@ -91,8 +92,6 @@ private:
     QMap<int,Entite*> entityMap;
     QMultiMap<std::string,int> entityTypeMap;
 
-
-
     int width;
     int height;
     int level = 2;
@@ -103,6 +102,14 @@ private:
     bool isSliding  = false;
     sf::Sprite hitBox;
 
+    bool canDash = true;
+    bool isDashing = false;
+    double maxFallingSpeed = 8.;
+    double dashSpeed = 10.;
+    int dashRefresh = 1000;
+    int dashDuration = 300;
+    QTimer* dashTimer;
+    QTimer* dashCoolDownTimer;
 
 };
 
