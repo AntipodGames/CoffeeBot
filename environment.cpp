@@ -31,7 +31,10 @@ void Environment::bonusPurge(){
 }
 
 void Environment::reloadLevel(){
-
+    getHero()->set_x(200);
+    getHero()->set_y(1450);
+    getHero()->setSpeedX(0);
+    getHero()->setSpeedY(0);
 }
 
 //bool Environment::collisionManager( QPair<double,double> speedVector){
@@ -124,6 +127,9 @@ void Environment::run(){
 
 
         }
+        if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Red)){
+            reloadLevel();
+        }
 
         applyGravity(it,tmpTrigger);
 
@@ -131,6 +137,12 @@ void Environment::run(){
 
 
     }
+
+
+    if(getHero()->getSpeedVector().first < 0 )
+        getHero()->setState("LEFT");
+    if(getHero()->getSpeedVector().first >= 0 )
+        getHero()->setState("RIGHT");
 
 
     emit moveSecondPlan(getHero()->getSpeedVector());
@@ -205,7 +217,6 @@ QString timeToString(envTime t){
 void Environment::turnRight(bool b){
     //     getHero()->moveRight();
     goRight = b;
-
 
 }
 

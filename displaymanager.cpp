@@ -46,11 +46,18 @@ void DisplayManager::display(AnimatedManager &AM, sf::RenderWindow &App){
 
     for(QMap<int,Entite*>::iterator it = EM.begin(); it != EM.end(); it++  ){
 
-        it.value()->get_trigger().draw(App);
+//        it.value()->get_trigger().draw(App);
         //AM.get(EM.value(tmp[i].second)->get_nom()).setFrame(EM.value(tmp[i].second)->getFrame());
 
 
         //Displays of all entity
+
+        if(it.value()->getState().compare("RIGHT") && AM.get(it.value()->get_nom()).getImage().getScale().x > 0)
+            AM.get(it.value()->get_nom()).getImage().setScale(-AM.get(it.value()->get_nom()).getImage().getScale().x
+                                                              ,AM.get(it.value()->get_nom()).getImage().getScale().y);
+        else if(it.value()->getState().compare("LEFT") && AM.get(it.value()->get_nom()).getImage().getScale().x < 0)
+            AM.get(it.value()->get_nom()).getImage().setScale(-AM.get(it.value()->get_nom()).getImage().getScale().x
+                                                              ,AM.get(it.value()->get_nom()).getImage().getScale().y);
 
         AM.get(it.value()->get_nom()).setFrame(it.value()->getFrame());
         AM.get(it.value()->get_nom()).setPosition(it.value()->get_x(),it.value()->get_y());

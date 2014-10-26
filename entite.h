@@ -46,6 +46,7 @@ public:
 
     virtual int getFrame();
 
+    virtual std::string getState();
 
     //*/
 
@@ -56,7 +57,7 @@ public:
     virtual void set_y(double);
     virtual void set_vitesse(int);
     virtual void set_nom(std::string);
-    virtual void setState(state);
+    virtual void setState(std::string);
     virtual void setAngle(float);
     //*/
 
@@ -95,7 +96,7 @@ protected:
     TzEllipse tz;
     int vie;
     float angle;
-    state currentState;
+    std::string currentState;
     int currentFrame;
     QTimer internalClock;
     //*/

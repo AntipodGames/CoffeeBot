@@ -27,7 +27,7 @@ Entite::Entite(const Entite & e){
 Entite::Entite(std::string name, double v, int px, int py,int w, int h, int vi)
 {
     nom = name;
-    currentState = RIGHT;
+    currentState = "RIGHT";
     x = px;
     y = py;
 
@@ -170,6 +170,10 @@ std::string Entite::get_nom(){
     return nom;
 }
 
+std::string Entite::getState(){
+    return currentState;
+}
+
 void Entite::perdVie(int degats){
     vie-=degats;
     if(vie <= 0)
@@ -204,7 +208,7 @@ void Entite::set_nom(std::string n){
     nom = n;
 }
 
-void Entite::setState(state stt){
+void Entite::setState(std::string stt){
     currentState = stt;
 }
 

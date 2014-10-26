@@ -104,6 +104,8 @@ private:
     bool stop = false;
     DataManager dataLoader;
 
+    bool isDead = false;
+
     bool isSliding  = false;
     sf::Sprite hitBox;
 
