@@ -14,11 +14,8 @@ QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent)
 
 void QSFcanvas::keyPressEvent(QKeyEvent * ke){
 
-<<<<<<< HEAD
-    if(ke->key() == Qt::Key_Z){
-=======
     if(ke->key() == Qt::Key_Space){
->>>>>>> 7f71a1fe77d1a259c5e58e648b95e1c79dbf9cd2
+
         emit jump();
     }
     if(ke->key() == Qt::Key_Q){
@@ -40,16 +37,10 @@ void QSFcanvas::keyPressEvent(QKeyEvent * ke){
 
 void QSFcanvas::keyReleaseEvent(QKeyEvent * e){
 
-<<<<<<< HEAD
-//    if(e->key() == Qt::Key_Z){
-//        emit jump(false);
-//    }
-=======
     if(e->key() == Qt::Key_Space){
         spacePressed = false;
 
     }
->>>>>>> 7f71a1fe77d1a259c5e58e648b95e1c79dbf9cd2
     if(e->key() == Qt::Key_Q){
         leftPressed = false;
         emit turnLeft(false);
@@ -170,16 +161,6 @@ void QSFcanvas::OnUpdate()
 
     gamePadEvent();
 
-//    if(rightPressed)
-//        emit turnRight();
-//    if(leftPressed)
-//        emit turnLeft();
-<<<<<<< HEAD
-//    if(upPressed)
-=======
-//    if(spacePressed)
->>>>>>> 7f71a1fe77d1a259c5e58e648b95e1c79dbf9cd2
-//        emit jump();
 
 
     clear();
