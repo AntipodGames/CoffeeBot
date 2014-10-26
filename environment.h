@@ -33,6 +33,7 @@ public:
     void keyPressEvent(QKeyEvent *);
 
     void init();
+    void applyGravity(QMap<int,Entite*>::iterator it);
 
     void bonusPurge();
 
@@ -43,6 +44,13 @@ public slots:
     void run();
     void makeStop(bool);
     void reloadLevel();
+
+    //HERO
+    void turnRight();
+    void turnLeft();
+    void jump();
+    //-
+
 
 
 signals:

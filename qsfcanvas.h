@@ -38,6 +38,7 @@ signals:
     void setPause();
     void turnLeft();
     void turnRight();
+    void jump();
     void activBoost(bool);
     void activSlide(bool);
     void sendPadPos(float,float);

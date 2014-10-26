@@ -140,7 +140,12 @@ void QSFcanvas::OnUpdate()
 
     gamePadEvent();
 
-
+    if(rightPressed)
+        emit turnRight();
+    if(leftPressed)
+        emit turnLeft();
+    if(upPressed)
+        emit jump();
 
 
     clear();

@@ -227,3 +227,30 @@ int Entite::getID(){
   //  return NULL;
 //}
 
+
+
+void Entite::setOnTheFloor(bool b){
+    onTheFloor = b;
+}
+
+void Entite::setCollRight(bool b){
+    collRight = b;
+}
+
+void Entite::setCollLeft(bool b){
+    collLeft = b;
+}
+
+bool Entite::getOnTheFloor(){
+    return onTheFloor;
+}
+
+void Entite::moveRight(){
+    if(!collRight)
+        addX(vitesse);
+}
+
+void Entite::moveLeft(){
+    if(!collLeft)
+        addX(-vitesse);
+}

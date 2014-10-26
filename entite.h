@@ -10,7 +10,7 @@
 #include "cmath"
 static const std::string stateStrings[] = {"Right","Left","Down","Up","Dead"};
 static int statID = 0;
-class Entite
+class Entite : public QObject
 {
 
 public:
@@ -76,6 +76,12 @@ public:
     void setSpeedVector(double vx, double vy);
     void setSpeedX(double vx);
     void setSpeedY(double vy);
+    void setOnTheFloor(bool b);
+    void setCollRight(bool b);
+    void setCollLeft(bool b);
+    bool getOnTheFloor();
+    void moveRight();
+    void moveLeft();
 
 protected:
     //*Attributs
@@ -103,6 +109,9 @@ protected:
     //*/
 
     int ID;
+    bool onTheFloor;
+    bool collRight;
+    bool collLeft;
 
 };
 

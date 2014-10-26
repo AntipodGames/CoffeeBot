@@ -198,7 +198,9 @@ float TzEllipse::intersectAngle(sf::Image* sprt, sf::Color color){
    // std::cout << "nombre de valeurs :" << itab.size() << std::endl;
    // std::cout << "moyenne :" <<  moy << std::endl;
    // std::cout << "angle centrale : " << currentAngle << std::endl << std::endl;
-    return PI*moy;
+    float result = PI * moy;
+
+    return result;
 
  /*  for(float i = 0; i<=2.0; i = i + 1./4.){
         Cos = centreX + (rayon)*cos(PI*i);
