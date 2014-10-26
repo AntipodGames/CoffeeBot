@@ -3,7 +3,7 @@
 
 QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent) : Qsfml(parent, Position, Size)
 {
-
+    carte = Carte(TM,"graphics/test.png","graphics/test.png","graphics/test.png");
 }
 
 
@@ -108,7 +108,8 @@ void QSFcanvas::OnUpdate()
     gamePadEvent();
 
 
-
+//    updateView(100,1000);
+    std::cout << "du 91" << std::endl;
 
     clear();
 

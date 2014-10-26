@@ -34,6 +34,7 @@ protected:
 
     virtual void paintEvent(QPaintEvent*);
 
+    QTimer myTimer;
     bool   myInitialized;
 };
 
