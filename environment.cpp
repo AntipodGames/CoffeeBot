@@ -69,7 +69,22 @@ void Environment::run(){
         TzEllipse tmpTrigger = it.value()->get_trigger();
 
         //CHECK NUMERO 1 : LE CHECK POST DEPLACEMENT
-
+//        if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
+//            double thetaMin = tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI;
+//            double thetaMax = tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI;
+//            double theta = (thetaMax - thetaMin) / 2.;
+//            if(theta >= 0.2){
+//                double newTheta = theta - PI;
+//                if(newTheta < -PI)
+//                    newTheta += 2. * PI;
+//                double dX = 2. * TAILLE * (1. - cos(theta)) * cos(newTheta);
+//                double dY = - 2. * TAILLE * (1. - cos(theta)) * sin(newTheta);
+//                std::cout << dX << "; " << dY << std::endl;
+//                it.value()->get_trigger().move(dX, dY);
+//                it.value()->set_x(it.value()->get_x() + dX);
+//                it.value()->set_y(it.value()->get_y() + dY);
+//            }
+//        }
 
         //TMP TRIGGER <- TRIGGER PREVISIONNEL
         tmpTrigger = it.value()->get_trigger();
@@ -79,7 +94,7 @@ void Environment::run(){
         //CHECK NUMERO 2 : LE CHECK PRE DEPLACEMENT
         if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
             //collision avec un mur a gauche
-           /* if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI + PI / 4.
+            /* if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI + PI / 4.
                     && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI - PI / 4.)*/
             if(PI >= tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI
                     && PI < tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI){
@@ -126,17 +141,15 @@ void Environment::run(){
 void Environment::applyGravity(QMap<int,Entite*>::iterator it,TzEllipse tmpTrigger){
     it.value()->setOnTheFloor(false);
     if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
-        std::cout << tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI << " "
-                  << tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI << std::endl;
-//        if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI / 2. + PI / 4.
-//                && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI / 2. - PI / 4.)
-            if(PI/2 >= tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI
-                    && PI/2 < tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI ){
-                it.value()->setSpeedY(0);
-                if(!isDashing)
-                    it.value()->setSpeedX(it.value()->getSpeedVector().first-0.15*it.value()->getSpeedVector().first);
-                //            it.value()->setSpeedY(it.value()->getSpeedVector().second - (double)it.value()->getHeight() * G / 200);
-                it.value()->setOnTheFloor(true);
+        //        if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI / 2. + PI / 4.
+        //                && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI / 2. - PI / 4.)
+        if(PI/2 >= tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI
+                && PI/2 < tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI ){
+            it.value()->setSpeedY(0);
+            if(!isDashing)
+                it.value()->setSpeedX(it.value()->getSpeedVector().first-0.15*it.value()->getSpeedVector().first);
+            //            it.value()->setSpeedY(it.value()->getSpeedVector().second - (double)it.value()->getHeight() * G / 200);
+            it.value()->setOnTheFloor(true);
         }
         else
             if(!it.value()->getOnTheFloor()){
