@@ -2,7 +2,6 @@
 
 
 Environment::Environment(){
-    hitBox.setTexture(*(TM.GetTexture("graphics/level" + QString::number(level).toStdString() + ".png")));
     width = hitBox.getScale().x;
     height = hitBox.getScale().y;
     playerStat.insert("mort",0);
@@ -25,7 +24,7 @@ void Environment::reloadLevel(){
 void Environment::run(){
 
 
-
+    std::cout << "bite" << std::endl;
 
     DM.setEM(entityMap);
 

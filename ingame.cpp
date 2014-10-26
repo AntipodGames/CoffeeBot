@@ -10,7 +10,7 @@ InGame::InGame(int width, int height)
     MainFrame->resize(width, height-50);
     env = new Environment();
     SFMLView = new QSFcanvas(QPoint(0,0),QSize(width,height-50),MainFrame);
-    gui = new InGameUI(QPoint(0,height-50),QSize(width,50));
+//    gui = new InGameUI(QPoint(0,height-50),QSize(width,50));
 
     Width = width;
     Height = height;
@@ -41,7 +41,7 @@ void InGame::init(){
 
     MainFrame->show();
     SFMLView->show();
-//    SFMLView->initView(env->getFly()->get_x(),env->getFly()->get_y(),Width,Height);
+    SFMLView->initView(100,1000,Width,Height);
 
 
     // On paramètre le timer de sorte qu'il génère un rafraîchissement à la fréquence souhaitée
@@ -51,7 +51,7 @@ void InGame::init(){
 
 
 
-    SM->playPause();
+//    SM->playPause();
 
 }
 
