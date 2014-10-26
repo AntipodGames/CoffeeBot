@@ -10,6 +10,12 @@ Environment::Environment(){
 
 void Environment::init(){
     std::cout << "Environment Initialisation" << std::endl;
+    Hero* robot = new Hero("Robot",7,700,1450,10,10,1,0);
+    entityMap.insert(robot->getID(),robot);
+    entityTypeMap.insert(robot->get_nom(),robot->getID());
+
+    emit sendEM(entityMap);
+
 }
 
 
@@ -25,18 +31,12 @@ void Environment::run(){
 
 
 
-    DM.setEM(entityMap);
-
-    emit sendDM(DM);
-    emit sendMort(playerStat.value("mort"));
-    emit sendScore(playerStat.value("score"));
     bool verticalColl;
     for(QMap<int,Entite*>::iterator it = entityMap.begin(); it != entityMap.end(); it++){
         verticalColl = false;
-        sf::Image* tmpImg = new sf::Image(hitBox.getTexture()->copyToImage());
-        if(it.value()->get_trigger().intersection(tmpImg,sf::Color::Black)){
-            if(it.value()->get_trigger().intersectAngle(tmpImg, sf::Color::Black) <= PI / 5.0
-                    && it.value()->get_trigger().intersectAngle(tmpImg, sf::Color::Black) >= - PI / 5.0){
+        if(it.value()->get_trigger().intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
+            if(it.value()->get_trigger().intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI / 5.0
+                    && it.value()->get_trigger().intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= - PI / 5.0){
                 it.value()->setSpeedY(0);
                 verticalColl = true;
             }
@@ -44,8 +44,13 @@ void Environment::run(){
                 if(!verticalColl)
                     it.value()->setSpeedY(it.value()->getSpeedVector().second + (double)it.value()->getHeight() * G);
         }
-        delete tmpImg;
     }
+
+
+
+
+    emit sendEM(entityMap);
+    emit sendHeroPos(getHero()->get_x(),getHero()->get_y());
 }
 
 void Environment::makeStop(bool b){
@@ -53,7 +58,9 @@ void Environment::makeStop(bool b){
 }
 
 
-
+Hero* Environment::getHero(){
+    return (Hero*) entityMap.value(entityTypeMap.value("Robot"));
+}
 
 
 envTime convertTime(int millisec){

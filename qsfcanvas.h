@@ -22,15 +22,12 @@ class QSFcanvas : public Qsfml
 public:
     QSFcanvas(const QPoint& Position, const QSize& Size,QWidget *parent = 0);
 
-
-
-
     ImageManager& getIM();
 
     void initView(int, int, int width, int height);
 
 public slots :
-    void receiveDM(DisplayManager&);
+    void receiveEM(QMap<int,Entite*>&);
     void switchMap(int);
     void desableLeft();
     void desableRight();

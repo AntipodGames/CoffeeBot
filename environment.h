@@ -9,6 +9,7 @@
 #include "displaymanager.h"
 #include "datamanager.h"
 #include "texturemanager.h"
+#include "hero.h"
 #define G 9.81
 
 
@@ -35,6 +36,8 @@ public:
 
     void bonusPurge();
 
+    Hero *getHero();
+
 
 public slots:
     void run();
@@ -43,11 +46,13 @@ public slots:
 
 
 signals:
-    void sendDM(DisplayManager&);
+    void sendEM( QMap<int,Entite*>&);
     void sendMort(int);
     void sendScore(int);
     void sendTime(envTime);
     void sendTotalTime(envTime);
+
+    void sendHeroPos(int,int);
 
     void newLevel(int);
     void endLvl(QString);
@@ -76,12 +81,10 @@ private:
     bool isArrived = false;
 
     QMap<int,Entite*> entityMap;
+    QMultiMap<std::string,int> entityTypeMap;
 
-    QVector<int> cacaIdList;
-    QVector<int> cacadorIdList;
 
-    DisplayManager DM;
-    int flyID;
+
     int width;
     int height;
     int level = 2;

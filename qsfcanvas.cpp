@@ -3,7 +3,7 @@
 
 QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent) : Qsfml(parent, Position, Size)
 {
-//    carte = Carte(TM,"graphics/hitmap1.png","graphics/hitmap1.png","graphics/hitmap1.png");
+    carte = Carte(TM,"graphics/hitmap2.png","graphics/hitmap2.png","graphics/hitmap2.png");
 
 
 }
@@ -87,7 +87,7 @@ void QSFcanvas::OnInit(){
 
 
     //*Initialisation des images
-//    AM.add("Fly",AnimatedSprite(TM,"graphics/FLYanim",4,7*TAILLE,0,true));
+    AM.add("Robot",AnimatedSprite(TM,"graphics/rectrouge",1,3*TAILLE,0,true));
 //    AM.add("cacador",AnimatedSprite(TM,"graphics/cacador",1,5*12,0,false));
     //*/
 
@@ -97,8 +97,8 @@ void QSFcanvas::OnInit(){
 
 }
 
-void QSFcanvas::receiveDM(DisplayManager & dm){
-    DM = dm;
+void QSFcanvas::receiveEM(QMap<int,Entite*>& em){
+    DM.setEM(em);
 }
 
 
@@ -119,7 +119,7 @@ void QSFcanvas::updateView(int x, int y){
             && y < carte.get_image("inf").getTextureRect().height - view.getSize().y/2
             && x >= view.getSize().x/2
             && y >= view.getSize().y/2)
-    view.setCenter(x,y);
+        view.setCenter(x,y);
 }
 
 void QSFcanvas::blockPad(){
@@ -140,20 +140,8 @@ void QSFcanvas::OnUpdate()
 
     gamePadEvent();
 
-    if(upPressed){
-        updateView(view.getCenter().x,view.getCenter().y-8);
-    }
-    if(leftPressed){
-        updateView(view.getCenter().x-8,view.getCenter().y);
-    }
-    if(rightPressed){
-        updateView(view.getCenter().x+8,view.getCenter().y);
-    }
-    if(downPressed){
-        updateView(view.getCenter().x,view.getCenter().y+8);
-    }
 
-//    updateView(100,1000);
+
 
     clear();
 

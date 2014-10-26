@@ -5,7 +5,8 @@
 class Hero : public Entite
 {
 public:
-    Hero();
+    Hero(){}
+    Hero(std::string name, double vit, int px, int py, int w, int h, int life, int cad);
 };
 
 #endif // HERO_H

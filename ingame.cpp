@@ -41,13 +41,17 @@ void InGame::init(){
 
     MainFrame->show();
     SFMLView->show();
-    SFMLView->initView(1500,750,Width,Height);
+    env->init();
+    SFMLView->initView(env->getHero()->get_x(),env->getHero()->get_y(),Width,Height);
 
+    connect(env,SIGNAL(sendHeroPos(int,int)),SFMLView,SLOT(updateView(int,int)));
+    connect(env,SIGNAL(sendEM(QMap<int,Entite*>&)),SFMLView,SLOT(receiveEM(QMap<int,Entite*>&)));
 
     // On paramètre le timer de sorte qu'il génère un rafraîchissement à la fréquence souhaitée
     connect(&timer, SIGNAL(timeout()), SFMLView, SLOT(repaint()));
     connect(&timer,SIGNAL(timeout()),env,SLOT(run()));
     timer.start();
+
 
 
 
