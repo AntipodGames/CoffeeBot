@@ -51,7 +51,7 @@ void InGame::init(){
 
 
 
-    SM->playPause();
+//    SM->playPause();
 
 }
 

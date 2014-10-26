@@ -2,7 +2,7 @@
 
 
 Environment::Environment(){
-    hitBox.setTexture(*(TM.GetTexture("graphics/level" + QString::number(level).toStdString() + ".png")));
+//    hitBox.setTexture(*(TM.GetTexture("graphics/level" + QString::number(level).toStdString() + ".png")));
     width = hitBox.getScale().x;
     height = hitBox.getScale().y;
     playerStat.insert("mort",0);
