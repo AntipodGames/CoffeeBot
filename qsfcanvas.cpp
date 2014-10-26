@@ -95,7 +95,7 @@ void QSFcanvas::OnInit(){
 
 
     //*Initialisation des images
-    AM.add("Robot",AnimatedSprite(TM,"graphics/rectrouge",1,3*TAILLE,0,true));
+    AM.add("Robot",AnimatedSprite(TM,"graphics/coffeeRobot",1,10*TAILLE,0,true));
 //    AM.add("cacador",AnimatedSprite(TM,"graphics/cacador",1,5*12,0,false));
     //*/
 

@@ -17,7 +17,7 @@ Environment::Environment(){
 
 void Environment::init(){
     std::cout << "Environment Initialisation" << std::endl;
-    Hero* robot = new Hero("Robot",1,200,1450,10,10,1,0);
+    Hero* robot = new Hero("Robot",1,200,1450,6*TAILLE,6*TAILLE,1,0);
     entityMap.insert(robot->getID(),robot);
     entityTypeMap.insert(robot->get_nom(),robot->getID());
 
@@ -116,14 +116,14 @@ void Environment::applyGravity(QMap<int,Entite*>::iterator it,TzEllipse tmpTrigg
         }
         else
             if(!it.value()->getOnTheFloor()){
-                double newSpeedY = it.value()->getSpeedVector().second + (double)it.value()->getHeight() * G / 500;
+                double newSpeedY = it.value()->getSpeedVector().second + 3* TAILLE * G / 500;
                 if(newSpeedY > maxFallingSpeed)
                     newSpeedY = maxFallingSpeed;
                 it.value()->setSpeedY(newSpeedY);
             }
     }
     else{
-        double newSpeedY = it.value()->getSpeedVector().second + (double)it.value()->getHeight() * G / 500;
+        double newSpeedY = it.value()->getSpeedVector().second + 3* TAILLE * G / 500;
         if(newSpeedY > maxFallingSpeed)
             newSpeedY = maxFallingSpeed;
         it.value()->setSpeedY(newSpeedY);
