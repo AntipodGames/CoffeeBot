@@ -3,7 +3,7 @@
 
 QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent) : Qsfml(parent, Position, Size)
 {
-//    carte = Carte(TM,"graphics/test.png","graphics/test.png","graphics/test.png");
+    carte = Carte(TM,"graphics/test.png","graphics/test.png","graphics/test.png");
 }
 
 
@@ -12,13 +12,39 @@ QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent)
 
 void QSFcanvas::keyPressEvent(QKeyEvent * ke){
 
-
-
+    if(ke->key() == Qt::Key_Z){
+        upPressed = true;
+    }
+    if(ke->key() == Qt::Key_Q){
+        leftPressed = true;
+    }
+    if(ke->key() == Qt::Key_D){
+        rightPressed = true;
+    }
+    if(ke->key() == Qt::Key_S){
+        downPressed = true;
+    }
 
 }
 
 void QSFcanvas::keyReleaseEvent(QKeyEvent * e){
 
+    if(e->key() == Qt::Key_Z){
+        upPressed = false;
+
+    }
+    if(e->key() == Qt::Key_Q){
+        leftPressed = false;
+
+    }
+    if(e->key() == Qt::Key_D){
+        rightPressed = false;
+
+    }
+    if(e->key() == Qt::Key_S){
+        downPressed = false;
+
+    }
 }
 
 void QSFcanvas::gamePadEvent(){
@@ -86,6 +112,11 @@ void QSFcanvas::desableRight(){
 }
 
 void QSFcanvas::updateView(int x, int y){
+
+    if(x < carte.get_image("inf").getTextureRect().width - view.getSize().x/2
+            && y < carte.get_image("inf").getTextureRect().height - view.getSize().y/2
+            && x >= view.getSize().x/2
+            && y >= view.getSize().y/2)
     view.setCenter(x,y);
 }
 
@@ -107,9 +138,20 @@ void QSFcanvas::OnUpdate()
 
     gamePadEvent();
 
+    if(upPressed){
+        updateView(view.getCenter().x,view.getCenter().y-8);
+    }
+    if(leftPressed){
+        updateView(view.getCenter().x-8,view.getCenter().y);
+    }
+    if(rightPressed){
+        updateView(view.getCenter().x+8,view.getCenter().y);
+    }
+    if(downPressed){
+        updateView(view.getCenter().x,view.getCenter().y+8);
+    }
 
 //    updateView(100,1000);
-    std::cout << "du 91" << std::endl;
 
     clear();
 

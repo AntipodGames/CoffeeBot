@@ -24,7 +24,6 @@ void Environment::reloadLevel(){
 void Environment::run(){
 
 
-    std::cout << "bite" << std::endl;
 
     DM.setEM(entityMap);
 

@@ -62,6 +62,8 @@ private:
 
     bool leftPressed = false;
     bool rightPressed = false;
+    bool upPressed = false;
+    bool downPressed = false;
     float  axisXPos = 0;
     float  axisYPos = 0;
     bool padBlocked = false;
