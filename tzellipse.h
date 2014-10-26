@@ -41,6 +41,7 @@ public:
     bool isInSprite(sf::Image *,sf::Color);
 
     float intersectAngle(sf::Image *sprt , sf::Color color);
+    QVector<float> intersectTabAngle(sf::Image *sprt , sf::Color color);
 
     TzEllipse boost(int h);
 

@@ -17,7 +17,7 @@ Environment::Environment(){
 
 void Environment::init(){
     std::cout << "Environment Initialisation" << std::endl;
-    Hero* robot = new Hero("Robot",1,200,1450,6*TAILLE,6*TAILLE,1,0);
+    Hero* robot = new Hero("Robot",1,200,1450,4*TAILLE,4*TAILLE,1,0);
     entityMap.insert(robot->getID(),robot);
     entityTypeMap.insert(robot->get_nom(),robot->getID());
 
@@ -39,6 +39,7 @@ void Environment::reloadLevel(){
 //}
 
 void Environment::run(){
+
     if(!isDashing){
         if(getHero()->getOnTheFloor()){
             if(goLeft){
@@ -63,34 +64,72 @@ void Environment::run(){
     }
 
     for(QMap<int,Entite*>::iterator it = entityMap.begin(); it != entityMap.end(); it++){
+
+        //TMP TRIGGER <- TRIGGER ACTUEL
         TzEllipse tmpTrigger = it.value()->get_trigger();
+
+        //CHECK NUMERO 1 : LE CHECK POST DEPLACEMENT
+        if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
+            double thetaMin = tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI;
+            double thetaMax = tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI;
+            double tmpTheta = (thetaMax - thetaMin) / 2.;
+            if(tmpTheta >= 0.2){
+                double finalTheta = thetaMax - tmpTheta - PI;
+                if(finalTheta < -PI)
+                    finalTheta += 2.* PI;
+
+                double dX = 4. * TAILLE * (1. - cos(tmpTheta)) * cos(finalTheta);
+                double dY = 4. * TAILLE * (1. - cos(tmpTheta)) * sin(finalTheta);
+                std::cout << dX << "; " << dY << std::endl;
+                it.value()->get_trigger().move(dX, dY);
+                it.value()->set_x(it.value()->get_x() + dX);
+                it.value()->set_y(it.value()->get_y() + dY);
+            }
+        }
+
+        //TMP TRIGGER <- TRIGGER PREVISIONNEL
+        tmpTrigger = it.value()->get_trigger();
         tmpTrigger.set_centre(it.value()->get_trigger().get_centreX() + it.value()->getSpeedVector().first
                               , it.value()->get_trigger().get_centreY() + it.value()->getSpeedVector().second );
+
+        //CHECK NUMERO 2 : LE CHECK PRE DEPLACEMENT
         if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
             //collision avec un mur a gauche
-            if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI + PI / 4.
-                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI - PI / 4.){
+            /* if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI + PI / 4.
+                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI - PI / 4.)*/
+            if(PI >= tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI
+                    && PI < tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI){
                 it.value()->setSpeedX(0);
                 //                it.value()->moveRight();
             }
 
 
             //collision avec un mur a droite
-            if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <=  PI / 4.
-                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= - PI / 4.){
+            /*if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <=  PI / 4.
+                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= - PI / 4.)*/
+            if(0 >= tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI
+                    && 0 < tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI){
                 //                it.value()->moveLeft();
                 it.value()->setSpeedX(0);
             }
 
 
             //            collision avec le plafond
-            if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <=  -PI/2 + PI / 4.
-                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= -PI/2 - PI / 4.){
+            /*if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <=  -PI/2 + PI / 4.
+                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= -PI/2 - PI / 4.)*/
+            if(-PI/2 >= tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI
+                    && -PI/2 < tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI){
                 it.value()->setSpeedY(0);
             }
 
+
         }
+
         applyGravity(it,tmpTrigger);
+
+
+
+
     }
 
 
@@ -106,8 +145,10 @@ void Environment::run(){
 void Environment::applyGravity(QMap<int,Entite*>::iterator it,TzEllipse tmpTrigger){
     it.value()->setOnTheFloor(false);
     if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
-        if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI / 2. + PI / 4.
-                && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI / 2. - PI / 4.){
+        //        if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI / 2. + PI / 4.
+        //                && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI / 2. - PI / 4.)
+        if(PI/2 >= tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI
+                && PI/2 < tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI ){
             it.value()->setSpeedY(0);
             if(!isDashing)
                 it.value()->setSpeedX(it.value()->getSpeedVector().first-0.15*it.value()->getSpeedVector().first);
@@ -116,14 +157,16 @@ void Environment::applyGravity(QMap<int,Entite*>::iterator it,TzEllipse tmpTrigg
         }
         else
             if(!it.value()->getOnTheFloor()){
-                double newSpeedY = it.value()->getSpeedVector().second + 3* TAILLE * G / 500;
+                double newSpeedY = it.value()->getSpeedVector().second + 2*TAILLE * G / 500;
+
                 if(newSpeedY > maxFallingSpeed)
                     newSpeedY = maxFallingSpeed;
                 it.value()->setSpeedY(newSpeedY);
             }
     }
     else{
-        double newSpeedY = it.value()->getSpeedVector().second + 3* TAILLE * G / 500;
+        double newSpeedY = it.value()->getSpeedVector().second + 2*TAILLE * G / 500;
+
         if(newSpeedY > maxFallingSpeed)
             newSpeedY = maxFallingSpeed;
         it.value()->setSpeedY(newSpeedY);
