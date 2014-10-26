@@ -10,7 +10,7 @@ Environment::Environment(){
 
 void Environment::init(){
     std::cout << "Environment Initialisation" << std::endl;
-    Hero* robot = new Hero("Robot",5,600,1450,10,10,1,0);
+    Hero* robot = new Hero("Robot",5,200,1450,10,10,1,0);
     entityMap.insert(robot->getID(),robot);
     entityTypeMap.insert(robot->get_nom(),robot->getID());
 
@@ -27,29 +27,45 @@ void Environment::reloadLevel(){
 
 }
 
+//bool Environment::collisionManager( QPair<double,double> speedVector){
+
+//}
+
 void Environment::run(){
 
 
-
     for(QMap<int,Entite*>::iterator it = entityMap.begin(); it != entityMap.end(); it++){
-        if(it.value()->get_trigger().intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
-            if(it.value()->get_trigger().intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI + PI / 4.
-                    && it.value()->get_trigger().intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI - PI / 4.){
-                it.value()->moveRight();
-                it.value()->setCollLeft(true);
+        TzEllipse tmpTrigger = it.value()->get_trigger();
+        tmpTrigger.set_centre(it.value()->get_trigger().get_centreX() + it.value()->getSpeedVector().first
+                              , it.value()->get_trigger().get_centreY() + it.value()->getSpeedVector().second );
+        if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
+            //collision avec un mur a gauche
+            if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI + PI / 4.
+                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI - PI / 4.){
+                it.value()->setSpeedX(0);
+//                it.value()->moveRight();
             }
-            else
-                it.value()->setCollLeft(false);
-            if(it.value()->get_trigger().intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <=  PI / 4.
-                    && it.value()->get_trigger().intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= - PI / 4.){
-                it.value()->moveLeft();
-                it.value()->setCollRight(true);
+
+
+            //collision avec un mur a droite
+            if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <=  PI / 4.
+                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= - PI / 4.){
+//                it.value()->moveLeft();
+                it.value()->setSpeedX(0);
             }
-            else
-                it.value()->setCollRight(false);
+
+
+//            collision avec le plafond
+            if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <=  -PI/2 + PI / 4.
+                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= -PI/2 - PI / 4.){
+                it.value()->setSpeedY(0);
+            }
+
         }
-        applyGravity(it);
+        applyGravity(it,tmpTrigger);
     }
+
+
 
     getHero()->move();
 
@@ -58,11 +74,11 @@ void Environment::run(){
     emit sendHeroPos(getHero()->get_x(),getHero()->get_y());
 }
 
-void Environment::applyGravity(QMap<int,Entite*>::iterator it){
+void Environment::applyGravity(QMap<int,Entite*>::iterator it,TzEllipse tmpTrigger){
     it.value()->setOnTheFloor(false);
-    if(it.value()->get_trigger().intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
-        if(it.value()->get_trigger().intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI / 2. + PI / 4.
-                && it.value()->get_trigger().intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI / 2. - PI / 4.){
+    if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
+        if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI / 2. + PI / 4.
+                && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI / 2. - PI / 4.){
             it.value()->setSpeedY(0);
             it.value()->setSpeedY(it.value()->getSpeedVector().second - (double)it.value()->getHeight() * G / 200);
             it.value()->setOnTheFloor(true);
@@ -105,12 +121,26 @@ QString timeToString(envTime t){
 
 }
 
-void Environment::turnRight(){
-     getHero()->moveRight();
+void Environment::turnRight(bool b){
+//     getHero()->moveRight();
+    if(b)
+        getHero()->setSpeedX(getHero()->getSpeedVector().first + getHero()->get_vitesse());
+    else {
+        if(getHero()->getSpeedVector().first - getHero()->get_vitesse() > 0)
+            getHero()->setSpeedX(getHero()->getSpeedVector().first - getHero()->get_vitesse());
+        else getHero()->setSpeedX(0);
+    }
 }
 
-void Environment::turnLeft(){
-    getHero()->moveLeft();
+void Environment::turnLeft(bool b){
+//    getHero()->moveLeft();
+    if(b)
+        getHero()->setSpeedX(getHero()->getSpeedVector().first - getHero()->get_vitesse());
+    else  {
+        if(getHero()->getSpeedVector().first + getHero()->get_vitesse() < 0)
+            getHero()->setSpeedX(getHero()->getSpeedVector().first - getHero()->get_vitesse());
+        else getHero()->setSpeedX(0);
+    }
 }
 
 void Environment::jump(){

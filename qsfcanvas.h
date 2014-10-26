@@ -36,8 +36,8 @@ public slots :
 
 signals:
     void setPause();
-    void turnLeft();
-    void turnRight();
+    void turnLeft(bool);
+    void turnRight(bool);
     void jump();
     void activBoost(bool);
     void activSlide(bool);

@@ -18,10 +18,12 @@ void QSFcanvas::keyPressEvent(QKeyEvent * ke){
         upPressed = true;
     }
     if(ke->key() == Qt::Key_Q){
-        leftPressed = true;
+//        leftPressed = true;
+        emit turnLeft(true);
     }
     if(ke->key() == Qt::Key_D){
-        rightPressed = true;
+//        rightPressed = true;
+        emit turnRight(true);
     }
     if(ke->key() == Qt::Key_S){
         downPressed = true;
@@ -36,11 +38,13 @@ void QSFcanvas::keyReleaseEvent(QKeyEvent * e){
 
     }
     if(e->key() == Qt::Key_Q){
-        leftPressed = false;
+//        leftPressed = false;
+        emit turnLeft(false);
 
     }
     if(e->key() == Qt::Key_D){
-        rightPressed = false;
+//        rightPressed = false;
+        emit turnRight(false);
 
     }
     if(e->key() == Qt::Key_S){
@@ -116,10 +120,23 @@ void QSFcanvas::desableRight(){
 void QSFcanvas::updateView(int x, int y){
 
     if(x < carte.get_image("inf").getTextureRect().width - view.getSize().x/2
-            && y < carte.get_image("inf").getTextureRect().height - view.getSize().y/2
-            && x >= view.getSize().x/2
-            && y >= view.getSize().y/2)
-        view.setCenter(x,y);
+            && x > view.getSize().x/2)
+        view.setCenter(x,view.getCenter().y);
+    else if(x >= carte.get_image("inf").getTextureRect().width - view.getSize().x/2)
+        view.setCenter(carte.get_image("inf").getTextureRect().width - view.getSize().x/2
+                       ,view.getCenter().y);
+    else if(x <= view.getSize().x/2)
+        view.setCenter(view.getSize().x/2,view.getCenter().y);
+
+
+    if(y < carte.get_image("inf").getTextureRect().height - view.getSize().y/2
+                                && y >= view.getSize().y/2)
+        view.setCenter(view.getCenter().x,y);
+    else if(y >= carte.get_image("inf").getTextureRect().height - view.getSize().y/2)
+        view.setCenter(view.getCenter().x
+                       ,carte.get_image("inf").getTextureRect().height - view.getSize().y/2);
+    else if(y <= view.getSize().y/2)
+        view.setCenter(view.getSize().x,view.getCenter().y/2);
 }
 
 void QSFcanvas::blockPad(){
@@ -140,10 +157,10 @@ void QSFcanvas::OnUpdate()
 
     gamePadEvent();
 
-    if(rightPressed)
-        emit turnRight();
-    if(leftPressed)
-        emit turnLeft();
+//    if(rightPressed)
+//        emit turnRight();
+//    if(leftPressed)
+//        emit turnLeft();
     if(upPressed)
         emit jump();
 

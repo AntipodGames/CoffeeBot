@@ -33,7 +33,7 @@ public:
     void keyPressEvent(QKeyEvent *);
 
     void init();
-    void applyGravity(QMap<int,Entite*>::iterator it);
+    void applyGravity(QMap<int,Entite*>::iterator it, TzEllipse tmpTrigger);
 
     void bonusPurge();
 
@@ -46,8 +46,8 @@ public slots:
     void reloadLevel();
 
     //HERO
-    void turnRight();
-    void turnLeft();
+    void turnRight(bool);
+    void turnLeft(bool);
     void jump();
     //-
 

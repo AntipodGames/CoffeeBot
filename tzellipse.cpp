@@ -235,6 +235,11 @@ void TzEllipse::set_centre(float x, float y){
     centreY = y;
 }
 
+void TzEllipse::set_centre(double x, double y){
+    centreX = x;
+    centreY = y;
+}
+
 void TzEllipse::set_centre(int x,int y){
     centreX = x;
     centreY = y;

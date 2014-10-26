@@ -55,6 +55,8 @@ public:
     //*Setters
     void set_centre(float,float);
     void set_centre (int ,int );
+    void set_centre (double ,double );
+
     void set_rayon(float);
     //*/
 };

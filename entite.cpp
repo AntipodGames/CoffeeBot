@@ -241,6 +241,12 @@ void Entite::setCollLeft(bool b){
     collLeft = b;
 }
 
+
+void Entite::setCollUp(bool b){
+    collUp = b;
+}
+
+
 bool Entite::getOnTheFloor(){
     return onTheFloor;
 }

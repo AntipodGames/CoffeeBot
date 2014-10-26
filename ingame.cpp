@@ -50,8 +50,8 @@ void InGame::init(){
     // On paramètre le timer de sorte qu'il génère un rafraîchissement à la fréquence souhaitée
     connect(&timer, SIGNAL(timeout()), SFMLView, SLOT(repaint()));
     connect(&timer,SIGNAL(timeout()),env,SLOT(run()));
-    connect(SFMLView, SIGNAL(turnLeft()), env, SLOT(turnLeft()));
-    connect(SFMLView, SIGNAL(turnRight()), env, SLOT(turnRight()));
+    connect(SFMLView, SIGNAL(turnLeft(bool)), env, SLOT(turnLeft(bool)));
+    connect(SFMLView, SIGNAL(turnRight(bool)), env, SLOT(turnRight(bool)));
     connect(SFMLView, SIGNAL(jump()), env, SLOT(jump()));
     timer.start();
 
