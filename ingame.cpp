@@ -41,7 +41,7 @@ void InGame::init(){
 
     MainFrame->show();
     SFMLView->show();
-    SFMLView->initView(1300,800,Width,Height);
+    SFMLView->initView(1000,500,Width,Height);
 
 
     // On paramètre le timer de sorte qu'il génère un rafraîchissement à la fréquence souhaitée

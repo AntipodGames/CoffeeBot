@@ -3,7 +3,7 @@
 
 QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent) : Qsfml(parent, Position, Size)
 {
-//    carte = Carte(TM,"graphics/test.png","graphics/test.png","graphics/test.png");
+    carte = Carte(TM,"graphics/test.png","graphics/test.png","graphics/test.png");
 }
 
 
@@ -113,10 +113,10 @@ void QSFcanvas::desableRight(){
 
 void QSFcanvas::updateView(int x, int y){
 
-    if(x < carte.get_image("inf").getTextureRect().width - view.getSize().x
-            && y < carte.get_image("inf").getTextureRect().height - view.getSize().y
-            && x > view.getSize().x
-            && y > view.getSize().y)
+    if(x < carte.get_image("inf").getTextureRect().width - view.getSize().x/2
+            && y < carte.get_image("inf").getTextureRect().height - view.getSize().y/2
+            && x >= view.getSize().x/2
+            && y >= view.getSize().y/2)
     view.setCenter(x,y);
 }
 
