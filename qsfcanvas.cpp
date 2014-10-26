@@ -14,40 +14,54 @@ QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent)
 
 void QSFcanvas::keyPressEvent(QKeyEvent * ke){
 
+<<<<<<< HEAD
     if(ke->key() == Qt::Key_Z){
+=======
+    if(ke->key() == Qt::Key_Space){
+>>>>>>> 7f71a1fe77d1a259c5e58e648b95e1c79dbf9cd2
         emit jump();
     }
     if(ke->key() == Qt::Key_Q){
-//        leftPressed = true;
+        leftPressed = true;
         emit turnLeft(true);
     }
     if(ke->key() == Qt::Key_D){
-//        rightPressed = true;
+        rightPressed = true;
         emit turnRight(true);
     }
-    if(ke->key() == Qt::Key_S){
-        downPressed = true;
+    if(ke->key() == Qt::Key_Control){
+        if(rightPressed && !leftPressed)
+            emit dash(true);
+        if(leftPressed && !rightPressed)
+            emit dash(false);
     }
 
 }
 
 void QSFcanvas::keyReleaseEvent(QKeyEvent * e){
 
+<<<<<<< HEAD
 //    if(e->key() == Qt::Key_Z){
 //        emit jump(false);
 //    }
+=======
+    if(e->key() == Qt::Key_Space){
+        spacePressed = false;
+
+    }
+>>>>>>> 7f71a1fe77d1a259c5e58e648b95e1c79dbf9cd2
     if(e->key() == Qt::Key_Q){
-//        leftPressed = false;
+        leftPressed = false;
         emit turnLeft(false);
 
     }
     if(e->key() == Qt::Key_D){
-//        rightPressed = false;
+        rightPressed = false;
         emit turnRight(false);
 
     }
-    if(e->key() == Qt::Key_S){
-        downPressed = false;
+    if(e->key() == Qt::Key_Control){
+        ctrlPressed = false;
 
     }
 }
@@ -160,7 +174,11 @@ void QSFcanvas::OnUpdate()
 //        emit turnRight();
 //    if(leftPressed)
 //        emit turnLeft();
+<<<<<<< HEAD
 //    if(upPressed)
+=======
+//    if(spacePressed)
+>>>>>>> 7f71a1fe77d1a259c5e58e648b95e1c79dbf9cd2
 //        emit jump();
 
 

@@ -53,6 +53,7 @@ void InGame::init(){
     connect(SFMLView, SIGNAL(turnLeft(bool)), env, SLOT(turnLeft(bool)));
     connect(SFMLView, SIGNAL(turnRight(bool)), env, SLOT(turnRight(bool)));
     connect(SFMLView, SIGNAL(jump()), env, SLOT(jump()));
+    connect(SFMLView, SIGNAL(dash(bool)), env, SLOT(dash(bool)));
     timer.start();
 
 

@@ -10,7 +10,7 @@
 #include "environment.h"
 #include "ingameui.h"
 #include "soundmanager.h"
-#define TIMER 16
+#define TIMER 10
 
 class InGame : public QWidget
 {

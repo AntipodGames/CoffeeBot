@@ -81,8 +81,6 @@ public:
     void setCollLeft(bool b);
     void setCollUp(bool);
     bool getOnTheFloor();
-    void moveRight();
-    void moveLeft();
 
 protected:
     //*Attributs
