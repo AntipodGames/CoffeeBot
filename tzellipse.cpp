@@ -210,6 +210,30 @@ float TzEllipse::intersectAngle(sf::Image* sprt, sf::Color color){
 
 }
 
+QVector<float> TzEllipse::intersectTabAngle(sf::Image *sprt, sf::Color color){
+    float Cos = 0;
+    float Sin = 0;
+    QVector<float> itab;
+    for(float i = currentAngle-1.; i<=currentAngle+1.; i = i + 1./32.){
+        Cos = centreX + (rayon)*cos(PI*i);
+        Sin = centreY + (rayon)*sin(PI*i);
+        if(sprt->getPixel(Cos,Sin) == color){
+            itab.append(i);
+
+        }
+
+    }
+
+
+
+   // std::cout << "nombre de valeurs :" << itab.size() << std::endl;
+   // std::cout << "moyenne :" <<  moy << std::endl;
+   // std::cout << "angle centrale : " << currentAngle << std::endl << std::endl;
+
+    return itab;
+
+}
+
 TzEllipse TzEllipse::boost(int h){
 
     TzEllipse TZ(centreX,centreY,rayon+h);
