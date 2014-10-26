@@ -39,19 +39,28 @@ void Environment::reloadLevel(){
 //}
 
 void Environment::run(){
-
-    if(getHero()->getOnTheFloor()){
-        if(goLeft)
-            getHero()->setSpeedX(getHero()->getSpeedVector().first - getHero()->get_vitesse());
-        if(goRight)
-            getHero()->setSpeedX(getHero()->getSpeedVector().first + getHero()->get_vitesse());
-    }else{
-        if(goLeft)
-            getHero()->setSpeedX(getHero()->getSpeedVector().first - 0.15*getHero()->get_vitesse());
-        if(goRight)
-            getHero()->setSpeedX(getHero()->getSpeedVector().first + 0.15*getHero()->get_vitesse());
+    if(!isDashing){
+        if(getHero()->getOnTheFloor()){
+            if(goLeft){
+                getHero()->setSpeedX(getHero()->getSpeedVector().first - getHero()->get_vitesse());
+            }
+            if(goRight){
+                getHero()->setSpeedX(getHero()->getSpeedVector().first + getHero()->get_vitesse());
+            }
+        }else{
+            if(goLeft){double updatedSpeed = getHero()->getSpeedVector().first - 0.15*getHero()->get_vitesse();
+                if(updatedSpeed < -maxNormalSpeed)
+                    updatedSpeed = -maxNormalSpeed;
+                getHero()->setSpeedX(updatedSpeed);
+            }
+            if(goRight){
+                double updatedSpeed = getHero()->getSpeedVector().first + 0.15*getHero()->get_vitesse();
+                if(updatedSpeed > maxNormalSpeed)
+                    updatedSpeed = maxNormalSpeed;
+                getHero()->setSpeedX(updatedSpeed);
+            }
+        }
     }
-
 
     for(QMap<int,Entite*>::iterator it = entityMap.begin(); it != entityMap.end(); it++){
         TzEllipse tmpTrigger = it.value()->get_trigger();
@@ -62,19 +71,19 @@ void Environment::run(){
             if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI + PI / 4.
                     && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI - PI / 4.){
                 it.value()->setSpeedX(0);
-//                it.value()->moveRight();
+                //                it.value()->moveRight();
             }
 
 
             //collision avec un mur a droite
             if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <=  PI / 4.
                     && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= - PI / 4.){
-//                it.value()->moveLeft();
+                //                it.value()->moveLeft();
                 it.value()->setSpeedX(0);
             }
 
 
-//            collision avec le plafond
+            //            collision avec le plafond
             if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <=  -PI/2 + PI / 4.
                     && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= -PI/2 - PI / 4.){
                 it.value()->setSpeedY(0);
@@ -100,20 +109,21 @@ void Environment::applyGravity(QMap<int,Entite*>::iterator it,TzEllipse tmpTrigg
         if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI / 2. + PI / 4.
                 && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI / 2. - PI / 4.){
             it.value()->setSpeedY(0);
-            it.value()->setSpeedX(it.value()->getSpeedVector().first-0.15*it.value()->getSpeedVector().first);
-//            it.value()->setSpeedY(it.value()->getSpeedVector().second - (double)it.value()->getHeight() * G / 200);
+            if(!isDashing)
+                it.value()->setSpeedX(it.value()->getSpeedVector().first-0.15*it.value()->getSpeedVector().first);
+            //            it.value()->setSpeedY(it.value()->getSpeedVector().second - (double)it.value()->getHeight() * G / 200);
             it.value()->setOnTheFloor(true);
         }
         else
             if(!it.value()->getOnTheFloor()){
-                double newSpeedY = it.value()->getSpeedVector().second + (double)it.value()->getHeight() * G / 400;
+                double newSpeedY = it.value()->getSpeedVector().second + (double)it.value()->getHeight() * G / 500;
                 if(newSpeedY > maxFallingSpeed)
                     newSpeedY = maxFallingSpeed;
                 it.value()->setSpeedY(newSpeedY);
             }
     }
     else{
-        double newSpeedY = it.value()->getSpeedVector().second + (double)it.value()->getHeight() * G / 400;
+        double newSpeedY = it.value()->getSpeedVector().second + (double)it.value()->getHeight() * G / 500;
         if(newSpeedY > maxFallingSpeed)
             newSpeedY = maxFallingSpeed;
         it.value()->setSpeedY(newSpeedY);
@@ -150,14 +160,14 @@ QString timeToString(envTime t){
 }
 
 void Environment::turnRight(bool b){
-//     getHero()->moveRight();
+    //     getHero()->moveRight();
     goRight = b;
 
 
 }
 
 void Environment::turnLeft(bool b){
-//    getHero()->moveLeft();
+    //    getHero()->moveLeft();
 
     goLeft = b;
 
@@ -186,7 +196,6 @@ void Environment::dash(bool right){
 }
 
 void Environment::resetDashSpeed(){
-    getHero()->setSpeedX(0);
     isDashing = false;
     dashTimer->stop();
 }

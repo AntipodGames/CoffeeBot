@@ -108,6 +108,7 @@ private:
     bool canDash = true;
     bool isDashing = false;
     double maxFallingSpeed = 8.;
+    double maxNormalSpeed = 6.;
     double dashSpeed = 10.;
     int dashRefresh = 1000;
     int dashDuration = 300;
