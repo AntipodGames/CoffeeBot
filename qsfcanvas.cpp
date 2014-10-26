@@ -15,7 +15,7 @@ QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent)
 void QSFcanvas::keyPressEvent(QKeyEvent * ke){
 
     if(ke->key() == Qt::Key_Z){
-        upPressed = true;
+        emit jump();
     }
     if(ke->key() == Qt::Key_Q){
 //        leftPressed = true;
@@ -33,10 +33,9 @@ void QSFcanvas::keyPressEvent(QKeyEvent * ke){
 
 void QSFcanvas::keyReleaseEvent(QKeyEvent * e){
 
-    if(e->key() == Qt::Key_Z){
-        upPressed = false;
-
-    }
+//    if(e->key() == Qt::Key_Z){
+//        emit jump(false);
+//    }
     if(e->key() == Qt::Key_Q){
 //        leftPressed = false;
         emit turnLeft(false);
@@ -161,8 +160,8 @@ void QSFcanvas::OnUpdate()
 //        emit turnRight();
 //    if(leftPressed)
 //        emit turnLeft();
-    if(upPressed)
-        emit jump();
+//    if(upPressed)
+//        emit jump();
 
 
     clear();

@@ -10,7 +10,7 @@ Environment::Environment(){
 
 void Environment::init(){
     std::cout << "Environment Initialisation" << std::endl;
-    Hero* robot = new Hero("Robot",5,200,1450,10,10,1,0);
+    Hero* robot = new Hero("Robot",1,200,1450,10,10,1,0);
     entityMap.insert(robot->getID(),robot);
     entityTypeMap.insert(robot->get_nom(),robot->getID());
 
@@ -32,6 +32,18 @@ void Environment::reloadLevel(){
 //}
 
 void Environment::run(){
+
+    if(getHero()->getOnTheFloor()){
+        if(goLeft)
+            getHero()->setSpeedX(getHero()->getSpeedVector().first - getHero()->get_vitesse());
+        if(goRight)
+            getHero()->setSpeedX(getHero()->getSpeedVector().first + getHero()->get_vitesse());
+    }else{
+        if(goLeft)
+            getHero()->setSpeedX(getHero()->getSpeedVector().first - 0.15*getHero()->get_vitesse());
+        if(goRight)
+            getHero()->setSpeedX(getHero()->getSpeedVector().first + 0.15*getHero()->get_vitesse());
+    }
 
 
     for(QMap<int,Entite*>::iterator it = entityMap.begin(); it != entityMap.end(); it++){
@@ -67,6 +79,7 @@ void Environment::run(){
 
 
 
+
     getHero()->move();
 
 
@@ -80,7 +93,8 @@ void Environment::applyGravity(QMap<int,Entite*>::iterator it,TzEllipse tmpTrigg
         if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI / 2. + PI / 4.
                 && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI / 2. - PI / 4.){
             it.value()->setSpeedY(0);
-            it.value()->setSpeedY(it.value()->getSpeedVector().second - (double)it.value()->getHeight() * G / 200);
+            it.value()->setSpeedX(it.value()->getSpeedVector().first-0.15*it.value()->getSpeedVector().first);
+//            it.value()->setSpeedY(it.value()->getSpeedVector().second - (double)it.value()->getHeight() * G / 200);
             it.value()->setOnTheFloor(true);
         }
         else
@@ -123,27 +137,21 @@ QString timeToString(envTime t){
 
 void Environment::turnRight(bool b){
 //     getHero()->moveRight();
-    if(b)
-        getHero()->setSpeedX(getHero()->getSpeedVector().first + getHero()->get_vitesse());
-    else {
-        if(getHero()->getSpeedVector().first - getHero()->get_vitesse() > 0)
-            getHero()->setSpeedX(getHero()->getSpeedVector().first - getHero()->get_vitesse());
-        else getHero()->setSpeedX(0);
-    }
+    goRight = b;
+
+
 }
 
 void Environment::turnLeft(bool b){
 //    getHero()->moveLeft();
-    if(b)
-        getHero()->setSpeedX(getHero()->getSpeedVector().first - getHero()->get_vitesse());
-    else  {
-        if(getHero()->getSpeedVector().first + getHero()->get_vitesse() < 0)
-            getHero()->setSpeedX(getHero()->getSpeedVector().first - getHero()->get_vitesse());
-        else getHero()->setSpeedX(0);
-    }
+
+    goLeft = b;
+
+
 }
 
 void Environment::jump(){
+
     if(getHero()->getOnTheFloor())
-        getHero()->setSpeedY(- getHero()->get_vitesse() * 1.5);
+        getHero()->setSpeedY(- getHero()->get_vitesse() * 6.5);
 }

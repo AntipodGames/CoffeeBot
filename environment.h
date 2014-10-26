@@ -91,7 +91,8 @@ private:
     QMap<int,Entite*> entityMap;
     QMultiMap<std::string,int> entityTypeMap;
 
-
+    bool goLeft = false;
+    bool goRight = false;
 
     int width;
     int height;
