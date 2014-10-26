@@ -65,6 +65,8 @@ signals:
 
     void sendHeroPos(int,int);
 
+    void moveSecondPlan(QPair<double,double>);
+
     void newLevel(int);
     void endLvl(QString);
     void padBlock();

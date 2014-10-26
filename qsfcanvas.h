@@ -33,6 +33,7 @@ public slots :
     void desableRight();
     void updateView(int x,int y);
     void blockPad();
+    void moveSecondPlan(QPair<double,double>);
 
 signals:
     void setPause();

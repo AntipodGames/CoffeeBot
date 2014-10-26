@@ -3,7 +3,7 @@
 
 QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent) : Qsfml(parent, Position, Size)
 {
-    carte = Carte(TM,"graphics/hitmap2.png","graphics/hitmap2.png","graphics/hitmap2.png");
+    carte = Carte(TM,"graphics/1srtplan.png","graphics/2ndPlan.png","graphics/3rdPlan.png");
 
 
 }
@@ -155,6 +155,10 @@ void QSFcanvas::switchMap(int lvl){
 
 }
 
+void QSFcanvas::moveSecondPlan(QPair<double, double> speedV){
+    carte.get_image("third").move(speedV.first*0.1,speedV.second*0.2);
+}
+
 void QSFcanvas::OnUpdate()
 {
 
@@ -167,9 +171,14 @@ void QSFcanvas::OnUpdate()
 
     setView(view);
 
-    carte.afficher(*this,"inf");
+
+    carte.afficher(*this,"second");
+
+    carte.afficher(*this,"third");
 
     DM.display(AM,*this);
+
+    carte.afficher(*this,"first");
 
 
 

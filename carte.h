@@ -10,9 +10,9 @@ class Carte
 {
 protected:
    //*Attributs
-   sf::Sprite Isup;
-   sf::Sprite Iinf;
-   sf::Sprite hitbox;
+   sf::Sprite firstPlan;
+   sf::Sprite secondPlan;
+   sf::Sprite thirdPlan;
    std::string hbpath;
    //*/
 
@@ -31,8 +31,8 @@ public:
     //*/
 
     //*Getters
-    sf::Sprite get_image(std::string);
-    sf::Image *get_hitbox(ImageManager&);
+    sf::Sprite&
+    get_image(std::string);
     //*/
 
     //*Setters

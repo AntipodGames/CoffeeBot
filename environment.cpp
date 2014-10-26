@@ -129,7 +129,7 @@ void Environment::run(){
     }
 
 
-
+    emit moveSecondPlan(getHero()->getSpeedVector());
 
     getHero()->move();
 
