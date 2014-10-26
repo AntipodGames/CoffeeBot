@@ -31,6 +31,16 @@ void Environment::run(){
     emit sendDM(DM);
     emit sendMort(playerStat.value("mort"));
     emit sendScore(playerStat.value("score"));
+    for(QMap<int,Entite*>::iterator it = entityMap.begin(); it != entityMap.end(); it++){
+        sf::Image* tmpImg = new sf::Image(hitBox.getTexture()->copyToImage());
+        if(it.value()->get_trigger().intersection(tmpImg,sf::Color::Black)){
+            if(it.value()->get_trigger().intersectAngle(tmpImg, sf::Color::Black) <= PI / 5.0
+                    && it.value()->get_trigger().intersectAngle(tmpImg, sf::Color::Black) >= - PI / 5.0){
+
+            }
+        }
+        delete tmpImg;
+    }
 }
 
 void Environment::makeStop(bool b){

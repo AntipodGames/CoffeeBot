@@ -173,14 +173,14 @@ bool TzEllipse::isInSprite(sf::Image *sprt, sf::Color color){
       return res;
 }
 
-float TzEllipse::intersectAngle(sf::Image* sprt){
+float TzEllipse::intersectAngle(sf::Image* sprt, sf::Color color){
     float Cos = 0;
     float Sin = 0;
     QVector<float> itab;
     for(float i = currentAngle-1.; i<=currentAngle+1.; i = i + 1./32.){
         Cos = centreX + (rayon)*cos(PI*i);
         Sin = centreY + (rayon)*sin(PI*i);
-        if(sprt->getPixel(Cos,Sin) == sf::Color::Black){
+        if(sprt->getPixel(Cos,Sin) == color){
             itab.append(i);
 
         }
