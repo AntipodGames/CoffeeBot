@@ -25,7 +25,7 @@ InGame::InGame(int width, int height)
     container = new QVBoxLayout(this);
 
     container->addWidget(MainFrame);
-    container->addWidget(gui);
+//    container->addWidget(gui);
     container->setMargin(0);
 
     endLevel->setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
@@ -41,7 +41,7 @@ void InGame::init(){
 
     MainFrame->show();
     SFMLView->show();
-    SFMLView->initView(100,1000,Width,Height);
+    SFMLView->initView(1300,800,Width,Height);
 
 
     // On paramètre le timer de sorte qu'il génère un rafraîchissement à la fréquence souhaitée
