@@ -63,6 +63,11 @@ int Entite::get_x(){
 int Entite::get_y(){
     return y;
 }
+
+int Entite::getHeight(){
+    return height;
+}
+
 void Entite::set_x(int px){
     x = px;
     tz.set_centre(x,y);
@@ -85,12 +90,24 @@ int Entite::move(){
     addY(speedVector.second);
 }
 
+QPair<double,double> Entite::getSpeedVector(){
+    return speedVector;
+}
+
 void Entite::setSpeedVector(QPair<double,double> v){
     speedVector = v;
 }
 
 void Entite::setSpeedVector(double vx, double vy){
     speedVector.first = vx;
+    speedVector.second = vy;
+}
+
+void Entite::setSpeedX(double vx){
+    speedVector.first = vx;
+}
+
+void Entite::setSpeedY(double vy){
     speedVector.second = vy;
 }
 

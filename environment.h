@@ -9,6 +9,7 @@
 #include "displaymanager.h"
 #include "datamanager.h"
 #include "texturemanager.h"
+#define G 9.81
 
 
 typedef struct envTime{
