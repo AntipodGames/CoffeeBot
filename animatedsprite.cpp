@@ -48,7 +48,7 @@ AnimatedSprite::AnimatedSprite(){}
  * @param centreY
  * @param vit
  */
-AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrF,int size, int centreX, int centreY,int vit)
+AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrFX,int size, int centreX, int centreY,int vit)
 {
     std::string imAdr(adr);
     imAdr.append(".png");
@@ -57,19 +57,22 @@ AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrF,int
 
     image.setTexture(*(TM.GetTexture(imAdr)));
 
-    frame = 1;
+    frameX = 1;
+    frameY = 1;
     cpt = 0;
     vitesse  = vit;
-    nbrFrame = nbrF;
+    nbrFrameX = nbrFX;
+    nbrFrameY = 1;
     scale = size;
 
     image.setScale(image.getScale().x/size,image.getScale().y/size);
-    image.setOrigin(image.getTexture()->getSize().x/(centreX*nbrFrame),image.getTexture()->getSize().y/centreY);
-    image.setTextureRect(sf::IntRect(0,0,image.getTexture()->getSize().x/nbrFrame,image.getTexture()->getSize().y));
+    image.setOrigin(image.getTexture()->getSize().x/(centreX*nbrFrameX),image.getTexture()->getSize().y/(centreY*nbrFrameY));
+    image.setTextureRect(sf::IntRect(0,0,image.getTexture()->getSize().x/nbrFrameX,image.getTexture()->getSize().y/nbrFrameY));
    // dataAnalyser(width,dataAdr);
 
 }
-AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrF,int size,int vit,bool centrer)
+
+AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrFX,int nbrFY,int size, int centreX, int centreY,int vit)
 {
     std::string imAdr(adr);
     imAdr.append(".png");
@@ -78,25 +81,50 @@ AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrF,int
 
     image.setTexture(*(TM.GetTexture(imAdr)));
 
-    frame = 1;
+    frameX = 1;
+    frameY = 1;
     cpt = 0;
     vitesse  = vit;
-    nbrFrame = nbrF;
-    scale = size;
-    image.setTextureRect(sf::IntRect(0,0,image.getTexture()->getSize().x/nbrFrame,image.getTexture()->getSize().y));
+    nbrFrameX = nbrFX;
+    nbrFrameY = nbrFY;
 
-    image.setScale(((float)size*nbrFrame)/((float)image.getTexture()->getSize().x),
-                   ((float)image.getTexture()->getSize().y)/((float)image.getTexture()->getSize().x)
-                   *((float)size*nbrFrame)/((float)image.getTexture()->getSize().y));
-    if(centrer){
-     //   if(nbrFrame == 1)
-       //     image.SetCenter(0,image.GetImage()->GetHeight()/2);
-       // else
-        image.setOrigin(image.getTexture()->getSize().x/(2*(nbrFrame)),image.getTexture()->getSize().y/2);
-    }
+    scale = size;
+
+    image.setScale(image.getScale().x/size,image.getScale().y/size);
+    image.setOrigin(image.getTexture()->getSize().x/(centreX*nbrFrameX),image.getTexture()->getSize().y/centreY*nbrFrameY);
+    image.setTextureRect(sf::IntRect(0,0,image.getTexture()->getSize().x/nbrFrameX,image.getTexture()->getSize().y/nbrFrameY/nbrFrameX));
    // dataAnalyser(width,dataAdr);
 
 }
+
+//AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrF,int size,int vit,bool centrer)
+//{
+//    std::string imAdr(adr);
+//    imAdr.append(".png");
+//    std::string dataAdr(adr);
+//    dataAdr.append(".data");
+
+//    image.setTexture(*(TM.GetTexture(imAdr)));
+
+//    frameX = 1;
+//    cpt = 0;
+//    vitesse  = vit;
+//    nbrFrame = nbrF;
+//    scale = size;
+//    image.setTextureRect(sf::IntRect(0,0,image.getTexture()->getSize().x/nbrFrame,image.getTexture()->getSize().y));
+
+//    image.setScale(((float)size*nbrFrame)/((float)image.getTexture()->getSize().x),
+//                   ((float)image.getTexture()->getSize().y)/((float)image.getTexture()->getSize().x)
+//                   *((float)size*nbrFrame)/((float)image.getTexture()->getSize().y));
+//    if(centrer){
+//     //   if(nbrFrame == 1)
+//       //     image.SetCenter(0,image.GetImage()->GetHeight()/2);
+//       // else
+//        image.setOrigin(image.getTexture()->getSize().x/(2*(nbrFrame)),image.getTexture()->getSize().y/2);
+//    }
+//   // dataAnalyser(width,dataAdr);
+
+//}
 
 /**
  * @brief AnimatedSprite::AnimatedSprite
@@ -104,10 +132,12 @@ AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrF,int
  */
 AnimatedSprite::AnimatedSprite(const AnimatedSprite & as){
     image = as.image;
-    nbrFrame = as.nbrFrame;
+    nbrFrameX = as.nbrFrameX;
+    nbrFrameY = as.nbrFrameY;
     vitesse = as.vitesse;
     cpt = as.cpt;
-    frame = as.frame;
+    frameX = as.frameX;
+    frameY = as.frameY;
     scale = as.scale;
 
 }
@@ -120,22 +150,39 @@ sf::Vector2f AnimatedSprite::TransformToLocal(const sf::Vector2f & Pt){
     return TransformToLocal(Pt);
 }
 
-void AnimatedSprite::setFrame(int i){
-    frame = i%nbrFrame+1;
-    image.setTextureRect(sf::IntRect((image.getTexture()->getSize().x/nbrFrame)*(frame-1)
-                                     ,0
-                                     ,(image.getTexture()->getSize().x/nbrFrame)
-                                     ,image.getTexture()->getSize().y));
+void AnimatedSprite::setFrameX(int i){
+    frameX = i%nbrFrameX+1;
+    image.setTextureRect(sf::IntRect((image.getTexture()->getSize().x/nbrFrameX)*(frameX-1)
+                                     ,(image.getTexture()->getSize().y/nbrFrameY)*(frameY-1)
+                                     ,(image.getTexture()->getSize().x/nbrFrameX)
+                                     ,image.getTexture()->getSize().y/nbrFrameY));
 
 }
 
-int AnimatedSprite::getFrame(){
-    return frame;
+void AnimatedSprite::setFrameY(int i){
+    frameY = i%nbrFrameY+1;
+    image.setTextureRect(sf::IntRect((image.getTexture()->getSize().x/nbrFrameX)*(frameX-1)
+                                     ,(image.getTexture()->getSize().y/nbrFrameY)*(frameY-1)
+                                     ,(image.getTexture()->getSize().x/nbrFrameX)
+                                     ,image.getTexture()->getSize().y/nbrFrameY));
+
 }
 
-int AnimatedSprite::getNbrFrame(){
-    return nbrFrame;
+int AnimatedSprite::getFrameX(){
+    return frameX;
 }
+int AnimatedSprite::getFrameY(){
+    return frameY;
+}
+
+int AnimatedSprite::getNbrFrameX(){
+    return nbrFrameX;
+}
+
+int AnimatedSprite::getNbrFrameY(){
+    return nbrFrameY;
+}
+
 
 void AnimatedSprite::Rotate(float angle){
     image.rotate(angle/PI*180);

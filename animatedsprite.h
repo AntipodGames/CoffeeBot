@@ -12,20 +12,26 @@ class AnimatedSprite
 {
 public:
     AnimatedSprite();
-    AnimatedSprite(TextureManager &TM, std::string adr, int nrbF, int size, int centreX, int centreY, int vit);
-    AnimatedSprite(TextureManager& TM, std::string adr, int nbrF, int size, int vit,bool);
+    AnimatedSprite(TextureManager &TM, std::string adr, int nbrFX, int size, int centreX, int centreY, int vit);
+    AnimatedSprite(TextureManager &TM, std::string adr, int nbrFX, int nbrFY, int size, int centreX, int centreY, int vit);
+
+//    AnimatedSprite(TextureManager& TM, std::string adr, int nbrF, int size, int vit,bool);
     AnimatedSprite(const AnimatedSprite&);
 
     void affichage(sf::RenderWindow&);
-    void setFrame(int);
-    int getFrame();
+    void setFrameX(int);
+    void setFrameY(int);
+
+    int getFrameX();
+    int getFrameY();
     void setPosition(int,int);
     sf::Sprite& getImage();
     void setAngle(float);
     float getAngle();
     void Rotate(float angle);
     int getScale();
-    int getNbrFrame();
+    int getNbrFrameX();
+    int getNbrFrameY();
     void resize(int x, int y);
 
 
@@ -34,8 +40,10 @@ public:
 
 private:
     sf::Sprite image;
-    int nbrFrame;
-    int frame;
+    int nbrFrameX;
+    int nbrFrameY;
+    int frameX;
+    int frameY;
     int cpt;
     int vitesse;
     int** matrix;

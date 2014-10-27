@@ -34,7 +34,7 @@ void AnimatedManager::set(const std::string& label, const std::string& lbl){
 void AnimatedManager::changeFrame(const std::string& label, int n){
     QVector<int> tmp(frameBDD[label]);
     AnimatedSprite tmpS(BDD[label]);
-    if(tmp[n] >= tmpS.getNbrFrame())
+    if(tmp[n] >= tmpS.getNbrFrameX())
         tmp[n] == 0;
 
     tmp[n]+=1;
