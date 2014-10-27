@@ -159,6 +159,10 @@ void QSFcanvas::moveSecondPlan(QPair<double, double> speedV){
     carte.get_image("third").move(speedV.first*0.1,speedV.second*0.2);
 }
 
+void QSFcanvas::initSecondPlan(){
+    carte.get_image("third").setPosition(0,0);
+}
+
 void QSFcanvas::OnUpdate()
 {
 

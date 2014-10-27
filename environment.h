@@ -66,6 +66,7 @@ signals:
     void sendHeroPos(int,int);
 
     void moveSecondPlan(QPair<double,double>);
+    void initSecondPlan();
 
     void newLevel(int);
     void endLvl(QString);
@@ -115,7 +116,7 @@ private:
     double maxNormalSpeed = 6.;
     double dashSpeed = 10.;
     int dashRefresh = 1000;
-    int dashDuration = 300;
+    int dashDuration = 400;
     QTimer* dashTimer;
     QTimer* dashCoolDownTimer;
 

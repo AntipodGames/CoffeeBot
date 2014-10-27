@@ -35,6 +35,7 @@ void Environment::reloadLevel(){
     getHero()->set_y(1450);
     getHero()->setSpeedX(0);
     getHero()->setSpeedY(0);
+    emit initSecondPlan();
 }
 
 //bool Environment::collisionManager( QPair<double,double> speedVector){

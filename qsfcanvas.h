@@ -34,6 +34,7 @@ public slots :
     void updateView(int x,int y);
     void blockPad();
     void moveSecondPlan(QPair<double,double>);
+    void initSecondPlan();
 
 signals:
     void setPause();
