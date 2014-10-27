@@ -68,7 +68,7 @@ void Environment::run(){
                 getHero()->setSpeedX(updatedSpeed);
             }
         }
-        //}
+    }
 
 
     for(QMap<int,Entite*>::iterator it = entityMap.begin(); it != entityMap.end(); it++){
@@ -88,7 +88,16 @@ void Environment::run(){
 
                 double dX = 4. * TAILLE * (1. - cos(tmpTheta)) * cos(finalTheta);
                 double dY = 4. * TAILLE * (1. - cos(tmpTheta)) * sin(finalTheta);
-//                std::cout << dX << "; " << dY << std::endl;
+
+                if(dY < 1. && dY > -1.){
+                    std::cout << "mur ";
+                    if(dX < 0.)
+                        std::cout << "à droite" << std::endl;
+                    else
+                        std::cout << "à gauche" << std::endl;
+
+                }
+
                 it.value()->get_trigger().move(dX, dY);
                 it.value()->set_x(it.value()->get_x() + dX);
                 it.value()->set_y(it.value()->get_y() + dY);
@@ -103,58 +112,37 @@ void Environment::run(){
         //CHECK NUMERO 2 : LE CHECK PRE DEPLACEMENT
         if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Black)){
             //collision avec un mur a gauche
-            /* if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <= PI + PI / 4.
-                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= PI - PI / 4.)*/
             if(PI >= tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI
                     && PI < tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI){
                 it.value()->setSpeedX(0);
-                //                it.value()->moveRight();
             }
-
-
             //collision avec un mur a droite
-            /*if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <=  PI / 4.
-                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= - PI / 4.)*/
             if(0 >= tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI
                     && 0 < tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI){
-                //                it.value()->moveLeft();
                 it.value()->setSpeedX(0);
             }
-
-
             //            collision avec le plafond
-            /*if(tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) <=  -PI/2 + PI / 4.
-                    && tmpTrigger.intersectAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black) >= -PI/2 - PI / 4.)*/
-            if(-PI/2 >= tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI
-                    && -PI/2 < tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI){
+            if(3.* PI/2. >= tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).first()*PI
+                    && 3.* PI/2. < tmpTrigger.intersectTabAngle(IM.GetImage("graphics/hitmap2.png"), sf::Color::Black).last()*PI){
                 it.value()->setSpeedY(0);
             }
-
-
         }
         if(tmpTrigger.intersection(IM.GetImage("graphics/hitmap2.png"),sf::Color::Red)){
             reloadLevel();
         }
-
-        applyGravity(it,tmpTrigger);
-
-
-
-} //
+        if(!isDashing){
+            applyGravity(it,tmpTrigger);
+        }
     }
 
-    std::cout << getHero()->frameY << std::endl;
-
-   if(abs(getHero()->getSpeedVector().first) > 0. && abs(getHero()->getSpeedVector().first) <= 2.)
-       getHero()->frameY = 1;
-   else if(abs(getHero()->getSpeedVector().first) > 2. && abs(getHero()->getSpeedVector().first) <=4)
-       getHero()->frameY = 2;
-   else if(abs(getHero()->getSpeedVector().first) >4 && abs(getHero()->getSpeedVector().first) <= 5)
-       getHero()->frameY = 3;
-   else if(abs(getHero()->getSpeedVector().first) > 5)
-       getHero()->frameY = 4;
-//   else if(getHero()->getSpeedVector().first > 5)
-//       getHero()->frameY = 4;
+    if(abs(getHero()->getSpeedVector().first) > 0. && abs(getHero()->getSpeedVector().first) <= 2.)
+        getHero()->frameY = 1;
+    else if(abs(getHero()->getSpeedVector().first) > 2. && abs(getHero()->getSpeedVector().first) <=4)
+        getHero()->frameY = 2;
+    else if(abs(getHero()->getSpeedVector().first) >4 && abs(getHero()->getSpeedVector().first) <= 5)
+        getHero()->frameY = 3;
+    else if(abs(getHero()->getSpeedVector().first) > 5)
+        getHero()->frameY = 4;
 
     if(getHero()->getSpeedVector().first < 0 )
         getHero()->setState("LEFT");
