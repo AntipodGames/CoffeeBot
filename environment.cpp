@@ -53,13 +53,13 @@ void Environment::run(){
                 getHero()->setSpeedX(getHero()->getSpeedVector().first + getHero()->get_vitesse());
             }
         }else{
-            if(goLeft){double updatedSpeed = getHero()->getSpeedVector().first - 0.15*getHero()->get_vitesse();
+            if(goLeft){double updatedSpeed = getHero()->getSpeedVector().first - 0.2*getHero()->get_vitesse();
                 if(updatedSpeed < -maxNormalSpeed)
                     updatedSpeed = -maxNormalSpeed;
                 getHero()->setSpeedX(updatedSpeed);
             }
             if(goRight){
-                double updatedSpeed = getHero()->getSpeedVector().first + 0.15*getHero()->get_vitesse();
+                double updatedSpeed = getHero()->getSpeedVector().first + 0.2*getHero()->get_vitesse();
                 if(updatedSpeed > maxNormalSpeed)
                     updatedSpeed = maxNormalSpeed;
                 getHero()->setSpeedX(updatedSpeed);
