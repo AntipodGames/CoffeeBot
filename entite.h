@@ -44,7 +44,7 @@ public:
     virtual int getVie();
     virtual float getAngle();
 
-    virtual int getFrame();
+    virtual float getFrame();
 
     virtual std::string getState();
 
@@ -59,6 +59,7 @@ public:
     virtual void set_nom(std::string);
     virtual void setState(std::string);
     virtual void setAngle(float);
+    virtual void setFrame(float);
     //*/
 
     //*Methodes
@@ -97,7 +98,7 @@ protected:
     int vie;
     float angle;
     std::string currentState;
-    int currentFrame;
+    float currentFrame;
     QTimer internalClock;
     //*/
 

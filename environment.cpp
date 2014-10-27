@@ -48,9 +48,12 @@ void Environment::run(){
         if(getHero()->getOnTheFloor()){
             if(goLeft){
                 getHero()->setSpeedX(getHero()->getSpeedVector().first - getHero()->get_vitesse());
+                getHero()->setFrame(getHero()->getFrame()+0.5);
             }
             if(goRight){
                 getHero()->setSpeedX(getHero()->getSpeedVector().first + getHero()->get_vitesse());
+                getHero()->setFrame(getHero()->getFrame()+0.5);
+
             }
         }else{
             if(goLeft){double updatedSpeed = getHero()->getSpeedVector().first - 0.15*getHero()->get_vitesse();
@@ -85,7 +88,7 @@ void Environment::run(){
 
                 double dX = 4. * TAILLE * (1. - cos(tmpTheta)) * cos(finalTheta);
                 double dY = 4. * TAILLE * (1. - cos(tmpTheta)) * sin(finalTheta);
-                std::cout << dX << "; " << dY << std::endl;
+//                std::cout << dX << "; " << dY << std::endl;
                 it.value()->get_trigger().move(dX, dY);
                 it.value()->set_x(it.value()->get_x() + dX);
                 it.value()->set_y(it.value()->get_y() + dY);
@@ -140,6 +143,18 @@ void Environment::run(){
 } //
     }
 
+    std::cout << getHero()->frameY << std::endl;
+
+   if(abs(getHero()->getSpeedVector().first) > 0. && abs(getHero()->getSpeedVector().first) <= 2.)
+       getHero()->frameY = 1;
+   else if(abs(getHero()->getSpeedVector().first) > 2. && abs(getHero()->getSpeedVector().first) <=4)
+       getHero()->frameY = 2;
+   else if(abs(getHero()->getSpeedVector().first) >4 && abs(getHero()->getSpeedVector().first) <= 5)
+       getHero()->frameY = 3;
+   else if(abs(getHero()->getSpeedVector().first) > 5)
+       getHero()->frameY = 4;
+//   else if(getHero()->getSpeedVector().first > 5)
+//       getHero()->frameY = 4;
 
     if(getHero()->getSpeedVector().first < 0 )
         getHero()->setState("LEFT");

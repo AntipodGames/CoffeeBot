@@ -15,7 +15,7 @@ public:
     AnimatedSprite(TextureManager &TM, std::string adr, int nbrFX, int size, int centreX, int centreY, int vit);
     AnimatedSprite(TextureManager &TM, std::string adr, int nbrFX, int nbrFY, int size, int centreX, int centreY, int vit);
 
-//    AnimatedSprite(TextureManager& TM, std::string adr, int nbrF, int size, int vit,bool);
+    AnimatedSprite(TextureManager& TM, std::string adr, int nbrFX,int nbrFY, int size, int vit,bool);
     AnimatedSprite(const AnimatedSprite&);
 
     void affichage(sf::RenderWindow&);

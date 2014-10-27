@@ -85,6 +85,10 @@ void Entite::set_y(double py){
     tz.set_centre(x,y);
 }
 
+void Entite::setFrame(float frame){
+    currentFrame=frame;
+}
+
 int Entite::move(){
     addX(speedVector.first);
     addY(speedVector.second);
@@ -188,7 +192,7 @@ float Entite::getAngle(){
     return angle;
 }
 
-int Entite::getFrame(){
+float Entite::getFrame(){
     return currentFrame;
 }
 

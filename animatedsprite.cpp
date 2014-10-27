@@ -97,34 +97,37 @@ AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrFX,in
 
 }
 
-//AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrF,int size,int vit,bool centrer)
-//{
-//    std::string imAdr(adr);
-//    imAdr.append(".png");
-//    std::string dataAdr(adr);
-//    dataAdr.append(".data");
+AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrFX,int nbrFY,int size,int vit,bool centrer)
+{
+    std::string imAdr(adr);
+    imAdr.append(".png");
+    std::string dataAdr(adr);
+    dataAdr.append(".data");
 
-//    image.setTexture(*(TM.GetTexture(imAdr)));
+    image.setTexture(*(TM.GetTexture(imAdr)));
 
-//    frameX = 1;
-//    cpt = 0;
-//    vitesse  = vit;
-//    nbrFrame = nbrF;
-//    scale = size;
-//    image.setTextureRect(sf::IntRect(0,0,image.getTexture()->getSize().x/nbrFrame,image.getTexture()->getSize().y));
+    frameX = 1;
+    frameY = 1;
 
-//    image.setScale(((float)size*nbrFrame)/((float)image.getTexture()->getSize().x),
-//                   ((float)image.getTexture()->getSize().y)/((float)image.getTexture()->getSize().x)
-//                   *((float)size*nbrFrame)/((float)image.getTexture()->getSize().y));
-//    if(centrer){
-//     //   if(nbrFrame == 1)
-//       //     image.SetCenter(0,image.GetImage()->GetHeight()/2);
-//       // else
-//        image.setOrigin(image.getTexture()->getSize().x/(2*(nbrFrame)),image.getTexture()->getSize().y/2);
-//    }
-//   // dataAnalyser(width,dataAdr);
+    cpt = 0;
+    vitesse  = vit;
+    nbrFrameX = nbrFX;
+    nbrFrameY = nbrFY;
 
-//}
+    scale = size;
+    image.setTextureRect(sf::IntRect(0,0,image.getTexture()->getSize().x/nbrFrameX,image.getTexture()->getSize().y/nbrFrameY));
+
+    image.setScale(((float)size*nbrFrameX)/((float)image.getTexture()->getSize().x),
+                   ((float)size*nbrFrameX)/((float)image.getTexture()->getSize().y));
+    if(centrer){
+     //   if(nbrFrame == 1)
+       //     image.SetCenter(0,image.GetImage()->GetHeight()/2);
+       // else
+        image.setOrigin(image.getTexture()->getSize().x/(2*(nbrFrameX)),image.getTexture()->getSize().y/(2*nbrFrameY));
+    }
+   // dataAnalyser(width,dataAdr);
+
+}
 
 /**
  * @brief AnimatedSprite::AnimatedSprite
@@ -210,6 +213,6 @@ int AnimatedSprite::getScale(){
 }
 
 void AnimatedSprite::resize(int x, int y){
-    image.setScale((float)(x*nbrFrame)/((float)image.getTexture()->getSize().x)
-                   ,((float)y)/((float)image.getTexture()->getSize().y));
+    image.setScale((float)(x*nbrFrameX)/((float)image.getTexture()->getSize().x)
+                   ,(float)(y*nbrFrameY)/((float)image.getTexture()->getSize().y));
 }
