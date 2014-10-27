@@ -73,7 +73,36 @@ void QSFcanvas::gamePadEvent(){
 
     sf::Event Event;
     if (this->pollEvent(Event))
-    {
+    {/*
+        if((Event.type == sf::Event::JoystickMoved) && ((Event.joystickMove.axis == sf::Joystick::X))){
+            axisXPos = Event.joystickMove.position/100;
+           // std::cout << axisXPos << std::endl;
+        }
+        if((Event.type == sf::Event::JoystickMoved) && ((Event.joystickMove.axis == sf::Joystick::Y))){
+            axisYPos = Event.joystickMove.position/100;
+
+            //std::cout << axisYPos << std::endl;
+        }
+        if((Event.type == sf::Event::JoystickButtonPressed)){
+            if(Event.joystickButton.button == 5){ //R1
+                emit activSlide(true);
+            }
+
+//            if(Event.JoyButton.Button == 4) //L1
+//                emit activBoost(true);
+
+
+        }
+        if((Event.type == sf::Event::JoystickButtonReleased)){
+            if(Event.joystickButton.button == 5){ //R1
+                emit activSlide(false);
+                padBlocked = false;
+            }
+            if(Event.joystickButton.button == 4) //L1
+                emit retry();
+
+
+        }*/
 
     }
 
