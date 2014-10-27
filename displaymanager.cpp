@@ -59,7 +59,12 @@ void DisplayManager::display(AnimatedManager &AM, sf::RenderWindow &App){
             AM.get(it.value()->get_nom()).getImage().setScale(-AM.get(it.value()->get_nom()).getImage().getScale().x
                                                               ,AM.get(it.value()->get_nom()).getImage().getScale().y);
 
-        AM.get(it.value()->get_nom()).setFrame(it.value()->getFrame());
+        AM.get(it.value()->get_nom()).setFrameY(it.value()->getFrame());
+        if(it.value()->getID() == 1)
+            AM.get(it.value()->get_nom()).setFrameX(((Hero*)it.value())->frameY);
+
+//        AM.get(it.value()->get_nom()).setFrameY(it.value()->getFrameY());
+
         AM.get(it.value()->get_nom()).setPosition(it.value()->get_x(),it.value()->get_y());
         AM.get(it.value()->get_nom()).affichage(App);
 

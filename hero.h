@@ -9,6 +9,9 @@ class Hero : public Entite
 public:
     Hero(){}
     Hero(std::string name, double vit, int px, int py, int w, int h, int life, int cad);
+    Hero(const Hero& h) : Entite(h), frameY(h.frameY){}
+
+    float frameY;
 };
 
 #endif // HERO_H

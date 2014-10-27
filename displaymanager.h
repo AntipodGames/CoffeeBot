@@ -4,6 +4,7 @@
 #include "qsfml.h"
 #include "animatedmanager.h"
 #include "entite.h"
+#include "hero.h"
 #include <QMap>
 #include <utility>
 

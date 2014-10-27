@@ -42,7 +42,7 @@ void InGame::init(){
     MainFrame->show();
     SFMLView->show();
     env->init();
-    SFMLView->initView(env->getHero()->get_x(),env->getHero()->get_y(),Width,Height);
+    SFMLView->initView(env->getHero()->get_x(),env->getHero()->get_y(),Width/2,Height/2);
 
     connect(env,SIGNAL(sendHeroPos(int,int)),SFMLView,SLOT(updateView(int,int)));
     connect(env,SIGNAL(sendEM(QMap<int,Entite*>&)),SFMLView,SLOT(receiveEM(QMap<int,Entite*>&)));
