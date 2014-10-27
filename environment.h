@@ -114,11 +114,12 @@ private:
     bool isDashing = false;
     double maxFallingSpeed = 8.;
     double maxNormalSpeed = 6.;
-    double dashSpeed = 10.;
+    double dashSpeed = 20.;
     int dashRefresh = 1000;
-    int dashDuration = 400;
+    int dashDuration = 150;
     QTimer* dashTimer;
     QTimer* dashCoolDownTimer;
+    double dashCineticY;
 
 };
 

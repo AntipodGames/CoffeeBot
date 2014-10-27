@@ -65,7 +65,8 @@ void Environment::run(){
                 getHero()->setSpeedX(updatedSpeed);
             }
         }
-    }
+        //}
+
 
     for(QMap<int,Entite*>::iterator it = entityMap.begin(); it != entityMap.end(); it++){
 
@@ -136,7 +137,7 @@ void Environment::run(){
 
 
 
-
+} //
     }
 
 
@@ -239,6 +240,8 @@ void Environment::dash(bool right){
     if(canDash){
         dashTimer->start();
         dashCoolDownTimer->start();
+        dashCineticY = getHero()->getSpeedVector().second;
+        getHero()->setSpeedY(0);
         isDashing = true;
         canDash = false;
         if(right){
@@ -251,6 +254,8 @@ void Environment::dash(bool right){
 }
 
 void Environment::resetDashSpeed(){
+    getHero()->setSpeedY(dashCineticY);
+    dashCineticY = 0;
     isDashing = false;
     dashTimer->stop();
 }
