@@ -12,6 +12,8 @@ InGame::InGame(int width, int height)
     SFMLView = new QSFcanvas(QPoint(0,0),QSize(width,height),MainFrame);
 //    gui = new InGameUI(QPoint(0,height-50),QSize(width,50));
 
+    env->setHitbox("graphics/hitmap1.png");
+
     Width = width;
     Height = height;
 
@@ -42,13 +44,16 @@ void InGame::init(){
     MainFrame->show();
     SFMLView->show();
     env->init();
-    SFMLView->initView(env->getHero()->get_x(),env->getHero()->get_y(),Width/2,Height/2);
+    SFMLView->initView(env->getHero()->get_x(),env->getHero()->get_y(),Width,Height);
 
     connect(env,SIGNAL(sendHeroPos(int,int)),SFMLView,SLOT(updateView(int,int)));
     connect(env,SIGNAL(sendEM(QMap<int,Entite*>&)),SFMLView,SLOT(receiveEM(QMap<int,Entite*>&)));
 
-    connect(env,SIGNAL(moveSecondPlan(QPair<double,double>)),SFMLView,SLOT(moveSecondPlan(QPair<double,double>)));
-    connect(env,SIGNAL(initSecondPlan()),SFMLView,SLOT(initSecondPlan()));
+    connect(env,SIGNAL(moveSecondPlan(QPair<double,double>)),&(SFMLView->getDM()),SLOT(moveSecondPlan(QPair<double,double>)));
+    connect(env,SIGNAL(initSecondPlan()),&(SFMLView->getDM()),SLOT(initSecondPlan()));
+
+    connect(SFMLView,SIGNAL(switchTrigger()),env,SLOT(switchTriggers()));
+
 
     // On paramètre le timer de sorte qu'il génère un rafraîchissement à la fréquence souhaitée
     connect(&timer, SIGNAL(timeout()), SFMLView, SLOT(repaint()));

@@ -9,8 +9,13 @@ Carte::Carte(){
 Carte::Carte(TextureManager &TM, std::string adr1, std::string adr2, std::string adr3)
 {
     firstPlan.setTexture(*(TM.GetTexture(adr1)));
+    firstPlan.setPosition(0,0);
     secondPlan.setTexture(*(TM.GetTexture(adr2)));
+    secondPlan.setPosition(0,0);
+
     thirdPlan.setTexture(*(TM.GetTexture(adr3)));
+    secondPlan.setPosition(0,0);
+
 }
 //*/
 
@@ -19,9 +24,9 @@ Carte::Carte(TextureManager &TM, std::string adr1, std::string adr2, std::string
 void Carte::afficher(sf::RenderWindow& App,std::string txt){
     if (txt.compare("first") == 0)
         App.draw(firstPlan);
-    else if(txt.compare("second"))
+    else if(txt.compare("second") == 0)
         App.draw(secondPlan);
-    else if(txt.compare("third"))
+    else if(txt.compare("third") == 0)
         App.draw(thirdPlan);
 }
 //*/
@@ -41,8 +46,6 @@ sf::Sprite& Carte::get_image(std::string txt){
 //*/
 
 
-void Carte::set_Map(ImageManager & IM,std::string adr){
-    sf::Texture text;
-    text.loadFromImage(*(IM.GetImage(adr)));
-    firstPlan.setTexture(text);
+void Carte::set_Map(TextureManager & TM,std::string adr){
+    firstPlan.setTexture(*(TM.GetTexture(adr)));
 }

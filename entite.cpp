@@ -92,6 +92,7 @@ void Entite::setFrame(float frame){
 int Entite::move(){
     addX(speedVector.first);
     addY(speedVector.second);
+    return 0;
 }
 
 QPair<double,double> Entite::getSpeedVector(){

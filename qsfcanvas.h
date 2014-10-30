@@ -25,6 +25,7 @@ public:
     ImageManager& getIM();
 
     void initView(int, int, int width, int height);
+    DisplayManager& getDM();
 
 public slots :
     void receiveEM(QMap<int,Entite*>&);
@@ -33,8 +34,7 @@ public slots :
     void desableRight();
     void updateView(int x,int y);
     void blockPad();
-    void moveSecondPlan(QPair<double,double>);
-    void initSecondPlan();
+
 
 signals:
     void setPause();
@@ -48,6 +48,7 @@ signals:
     void sendStop(bool);
     void takeContr(bool);
     void retry();
+    void switchTrigger();
 
 private:
     ImageManager IM;

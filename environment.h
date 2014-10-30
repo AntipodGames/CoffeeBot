@@ -10,6 +10,7 @@
 #include "datamanager.h"
 #include "texturemanager.h"
 #include "hero.h"
+#include "binaryswitch.h"
 #define G 9.81
 
 
@@ -39,6 +40,8 @@ public:
 
     Hero *getHero();
 
+    void setHitbox(std::string);
+
 
 public slots:
     void run();
@@ -53,6 +56,8 @@ public slots:
     void resetDashSpeed();
     void resetDashCD();
     //-
+
+    void switchTriggers();
 
 
 
@@ -83,6 +88,8 @@ private:
     ImageManager IM;
     TextureManager TM;
 
+    std::string hitbox;
+
     QMap<QString,int> playerStat;
 
     QTimer timer;
@@ -108,7 +115,6 @@ private:
     bool isDead = false;
 
     bool isSliding  = false;
-    sf::Sprite hitBox;
 
     bool canDash = true;
     bool isDashing = false;

@@ -3,9 +3,6 @@
 
 QSFcanvas::QSFcanvas(const QPoint& Position, const QSize& Size, QWidget* parent) : Qsfml(parent, Position, Size)
 {
-    carte = Carte(TM,"graphics/1srtplan.png","graphics/2ndPlan.png","graphics/3rdPlan.png");
-
-
 }
 
 
@@ -55,6 +52,8 @@ void QSFcanvas::keyReleaseEvent(QKeyEvent * e){
         ctrlPressed = false;
 
     }
+    if(e->key() == Qt::Key_E)
+        emit switchTrigger();
 }
 
 void QSFcanvas::gamePadEvent(){
@@ -117,14 +116,22 @@ void QSFcanvas::initView(int x, int y,int width,int height){
     view = sf::View(viewCenter,viewSize);
 }
 
+DisplayManager& QSFcanvas::getDM(){
+    return DM;
+}
+
 void QSFcanvas::OnInit(){
 
     setMouseTracking(true);
+    DM.init(TM);
 
 
 
     //*Initialisation des images
     AM.add("Robot",AnimatedSprite(TM,"graphics/animavance",5,5,10*TAILLE,0,true));
+    AM.add("trigger",AnimatedSprite(TM,"graphics/rectrouge",1,1,10*TAILLE,0,true));
+    AM.add("triggerOn",AnimatedSprite(TM,"graphics/rectvert",1,1,10*TAILLE,0,true));
+    AM.add("light",AnimatedSprite(TM,"graphics/lumiere",1,1,50*TAILLE,0,true));
 //    AM.add("cacador",AnimatedSprite(TM,"graphics/cacador",1,5*12,0,false));
     //*/
 
@@ -152,22 +159,22 @@ void QSFcanvas::desableRight(){
 
 void QSFcanvas::updateView(int x, int y){
 
-    if(x < carte.get_image("inf").getTextureRect().width - view.getSize().x/2
+    if(x < DM.getCarte().get_image("first").getTextureRect().width - view.getSize().x/2
             && x > view.getSize().x/2)
         view.setCenter(x,view.getCenter().y);
-    else if(x >= carte.get_image("inf").getTextureRect().width - view.getSize().x/2)
-        view.setCenter(carte.get_image("inf").getTextureRect().width - view.getSize().x/2
+    else if(x >= DM.getCarte().get_image("first").getTextureRect().width - view.getSize().x/2)
+        view.setCenter(DM.getCarte().get_image("first").getTextureRect().width - view.getSize().x/2
                        ,view.getCenter().y);
     else if(x <= view.getSize().x/2)
         view.setCenter(view.getSize().x/2,view.getCenter().y);
 
 
-    if(y < carte.get_image("inf").getTextureRect().height - view.getSize().y/2
+    if(y < DM.getCarte().get_image("first").getTextureRect().height - view.getSize().y/2
                                 && y >= view.getSize().y/2)
         view.setCenter(view.getCenter().x,y);
-    else if(y >= carte.get_image("inf").getTextureRect().height - view.getSize().y/2)
+    else if(y >= DM.getCarte().get_image("first").getTextureRect().height - view.getSize().y/2)
         view.setCenter(view.getCenter().x
-                       ,carte.get_image("inf").getTextureRect().height - view.getSize().y/2);
+                       ,DM.getCarte().get_image("first").getTextureRect().height - view.getSize().y/2);
     else if(y <= view.getSize().y/2)
         view.setCenter(view.getSize().x,view.getCenter().y/2);
 }
@@ -184,40 +191,17 @@ void QSFcanvas::switchMap(int lvl){
 
 }
 
-void QSFcanvas::moveSecondPlan(QPair<double, double> speedV){
-    carte.get_image("third").move(speedV.first*0.1,speedV.second*0.2);
-}
 
-void QSFcanvas::initSecondPlan(){
-    carte.get_image("third").setPosition(0,0);
-}
 
 void QSFcanvas::OnUpdate()
 {
-
-
     gamePadEvent();
-
-
 
     clear();
 
     setView(view);
 
-
-    carte.afficher(*this,"second");
-
-    carte.afficher(*this,"third");
-
-    DM.display(AM,*this);
-
-    carte.afficher(*this,"first");
-
-
-
-
-
-
+    DM.display(TM,AM,*this);
 }
 
 ImageManager& QSFcanvas::getIM(){

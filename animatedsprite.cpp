@@ -117,8 +117,9 @@ AnimatedSprite::AnimatedSprite(TextureManager & TM, std::string adr,int nbrFX,in
     scale = size;
     image.setTextureRect(sf::IntRect(0,0,image.getTexture()->getSize().x/nbrFrameX,image.getTexture()->getSize().y/nbrFrameY));
 
-    image.setScale(((float)size*nbrFrameX)/((float)image.getTexture()->getSize().x),
-                   ((float)size*nbrFrameX)/((float)image.getTexture()->getSize().y));
+    image.setScale((((float)size*nbrFrameX)/((float)image.getTexture()->getSize().x)),
+                   (((float)size*nbrFrameY)*(((float)image.getTexture()->getSize().y)/((float)image.getTexture()->getSize().x)))
+                   /((float)image.getTexture()->getSize().y));
     if(centrer){
      //   if(nbrFrame == 1)
        //     image.SetCenter(0,image.GetImage()->GetHeight()/2);

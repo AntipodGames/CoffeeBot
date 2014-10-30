@@ -36,7 +36,7 @@ public:
     //*/
 
     //*Setters
-    void set_Map(ImageManager&, std::string adr);
+    void set_Map(TextureManager&, std::string adr);
     //*/
 };
 

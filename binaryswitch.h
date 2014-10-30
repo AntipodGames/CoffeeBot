@@ -5,10 +5,20 @@
 class BinarySwitch : public Entite
 {
 public:
-    BinarySwitch();
+    BinarySwitch(){}
+    BinarySwitch(std::string name, double vit, int px, int py, int w, int h, int life, int cad);
+    BinarySwitch(const BinarySwitch& bs) : Entite(bs), activated(bs.activated){}
+
+    bool isActivated();
+    void allowToSwitch(bool);
+
+public slots:
+    void switchTrigger();
+
 
 private:
-    bool activated();
+    bool activated = false;
+    bool canSwitch =false;
 };
 
 #endif // BINARYSWITCH_H
