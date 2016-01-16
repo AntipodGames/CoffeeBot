@@ -13,6 +13,10 @@
 #include "environment.h"
 #include "animatedmanager.h"
 #include "displaymanager.h"
+#include <GL/glew.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+
 
 class QSFcanvas : public Qsfml
 {
@@ -59,6 +63,8 @@ private:
     sf::Clock Time;
     time_t initialTime;
     Carte carte;
+
+
 
     sf::View view;
 

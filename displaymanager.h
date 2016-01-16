@@ -10,6 +10,7 @@
 #include "texturemanager.h"
 #include <QMap>
 #include <utility>
+#include "lightsource.h"
 
 class DisplayManager : public QObject
 {
@@ -21,6 +22,8 @@ private:
     spriteMap sprites;
     QMap<int,Entite*> EM;
     Carte carte;
+    LightSource lightS;
+    sf::RenderStates renderstates;
 
 public slots:
     void moveSecondPlan(QPair<double,double>);

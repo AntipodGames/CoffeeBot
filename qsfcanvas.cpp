@@ -66,8 +66,8 @@ void QSFcanvas::gamePadEvent(){
      * R2 == 7
      */
 
-//    axisXPos = sf::Joystick::getAxisPosition(0,sf::Joystick::X);
-//    axisYPos = sf::Joystick::getAxisPosition(0,sf::Joystick::Y);
+    //    axisXPos = sf::Joystick::getAxisPosition(0,sf::Joystick::X);
+    //    axisYPos = sf::Joystick::getAxisPosition(0,sf::Joystick::Y);
 
 
     sf::Event Event;
@@ -126,13 +126,12 @@ void QSFcanvas::OnInit(){
     DM.init(TM);
 
 
-
     //*Initialisation des images
     AM.add("Robot",AnimatedSprite(TM,"graphics/animavance",5,5,10*TAILLE,0,true));
     AM.add("trigger",AnimatedSprite(TM,"graphics/rectrouge",1,1,10*TAILLE,0,true));
     AM.add("triggerOn",AnimatedSprite(TM,"graphics/rectvert",1,1,10*TAILLE,0,true));
     AM.add("light",AnimatedSprite(TM,"graphics/lumiere",1,1,50*TAILLE,0,true));
-//    AM.add("cacador",AnimatedSprite(TM,"graphics/cacador",1,5*12,0,false));
+    //    AM.add("cacador",AnimatedSprite(TM,"graphics/cacador",1,5*12,0,false));
     //*/
 
 
@@ -170,7 +169,7 @@ void QSFcanvas::updateView(int x, int y){
 
 
     if(y < DM.getCarte().get_image("first").getTextureRect().height - view.getSize().y/2
-                                && y >= view.getSize().y/2)
+            && y >= view.getSize().y/2)
         view.setCenter(view.getCenter().x,y);
     else if(y >= DM.getCarte().get_image("first").getTextureRect().height - view.getSize().y/2)
         view.setCenter(view.getCenter().x
@@ -201,7 +200,11 @@ void QSFcanvas::OnUpdate()
 
     setView(view);
 
+
     DM.display(TM,AM,*this);
+
+
+
 }
 
 ImageManager& QSFcanvas::getIM(){

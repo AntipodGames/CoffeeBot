@@ -1,7 +1,7 @@
 #include "displaymanager.h"
 
 DisplayManager::DisplayManager(){
-
+   lightS.load();
 }
 
 void DisplayManager::init(TextureManager& TM){
@@ -69,6 +69,10 @@ void DisplayManager::display(TextureManager& TM,AnimatedManager &AM, sf::RenderW
 
     carte.afficher(App,"third");
 
+    lightS.draw(App,renderstates);
+
+
+
     for(QMap<int,Entite*>::iterator it = EM.begin(); it != EM.end(); it++  ){
 
         it.value()->get_trigger().draw(App);
@@ -85,8 +89,10 @@ void DisplayManager::display(TextureManager& TM,AnimatedManager &AM, sf::RenderW
                                                               ,AM.get(it.value()->get_nom()).getImage().getScale().y);
 
         AM.get(it.value()->get_nom()).setFrameY(it.value()->getFrame());
-        if(it.value()->get_nom().compare("Robot") == 0)
+        if(it.value()->get_nom().compare("Robot") == 0){
             AM.get(it.value()->get_nom()).setFrameX(((Hero*)it.value())->frameY);
+
+        }
 
 //        AM.get(it.value()->get_nom()).setFrameY(it.value()->getFrameY());
 
